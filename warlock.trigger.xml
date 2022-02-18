@@ -364,7 +364,7 @@ resetFormat()
                     <string>Odpowiadasz</string>
                     <string>przemawia do Ciebie</string>
                     <string>Przemawiasz</string>
-                    <string>@</string>
+                    <string>[</string>
                     <string>&lt;</string>
                 </regexCodeList>
                 <regexCodePropertyList>
@@ -500,12 +500,7 @@ flashChatContainerButton(wizContainer, true)</script>
                     <name>wizline</name>
                     <script>--display(matches)
 line = matches[2]
-if(line == &quot;@&quot;) then
-	line = &quot;&quot;
-else
-	line = &quot;[&quot; .. line .. &quot;] &quot;
-end
-wizConsole:cecho(&quot;[&quot; .. getTime(true, &quot;HH:mm&quot;) .. &quot;] &lt;light_gray&gt;&quot; .. line .. &quot;&lt;white&gt;&quot; .. matches[3] .. &quot;: &quot; .. matches[4] .. &quot;&lt;reset&gt;\n&quot;)
+wizConsole:cecho(&quot;&lt;light_gray&gt;&quot; .. line .. &quot;&lt;white&gt;&quot; .. matches[3] .. &quot;: &quot; .. matches[4] .. &quot;&lt;reset&gt;\n&quot;)
 flashChatContainerButton(wizContainer, true)</script>
                     <triggerType>0</triggerType>
                     <conditonLineDelta>0</conditonLineDelta>
@@ -518,9 +513,9 @@ flashChatContainerButton(wizContainer, true)</script>
                     <colorTriggerFgColor>#000000</colorTriggerFgColor>
                     <colorTriggerBgColor>#000000</colorTriggerBgColor>
                     <regexCodeList>
-                        <string>^(@) (.+): (.+)</string>
+                        <string>^(\[)(.+): (.+)</string>
                         <string>^&lt;(.+)&gt; (.+): (.+)</string>
-                        <string>^(@) (\w+) (.+)</string>
+                        <string>^(\[)(\w+) (.+)</string>
                     </regexCodeList>
                     <regexCodePropertyList>
                         <integer>1</integer>
