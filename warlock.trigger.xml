@@ -5195,12 +5195,18 @@ end
 function gmcp_Area_Update()
 	if(gmcp.Room.Area.Update == nil) then return end
 	--display(gmcp.Room.Area.Update)
-	local roomId = getRoomIDbyHash(gmcp.Room.Area.Update.id)
-	if(roomId ~= -1) then
-		local czas = gmcp.Room.Area.Update.czas
-		local zapisany = getRoomUserData(roomId, "czas");
-		if(zapisany ~= tostring(czas)) then
-			local areaId = getAreaId(gmcp.Room.Area.Update.obszar)
+  local areaId = getAreaId(gmcp.Room.Area.Update.obszar)
+	if(areaId ~= -1) then
+		local toDelete = true
+		local roomId = getRoomIDbyHash(gmcp.Room.Area.Update.id)
+		if(roomId ~= -1) then
+			local czas = gmcp.Room.Area.Update.czas
+			local zapisany = getRoomUserData(roomId, "czas");
+			if(zapisany == tostring(czas)) then
+				toDelete = false
+			end
+		end
+		if(toDelete) then   
 			echo(" * Kasuje obszar '" .. getRoomAreaName(areaId) .. "', wykryte zmiany.\n")
 			deleteArea(areaId)
 		end
