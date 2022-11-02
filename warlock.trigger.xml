@@ -838,39 +838,7 @@ resetFormat();</script>
 				</Trigger>
 				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 					<name>cechy</name>
-					<script>function cechy_liczby(sila,zrecznosc,wytrzymalosc,inteligencja,madrosc,odwaga)
-  local s = silaall[sila];
-  local z = zrecznoscall[zrecznosc];
-  local w = wytkaall[wytrzymalosc];
-  local i = intall[inteligencja];
-  local m = madroscall[madrosc];
-  local o = odwagaall[odwaga]
-
-cecho(sila.." &lt;yellow_green&gt;("..s.."), ")
-cecho(zrecznosc.." &lt;yellow_green&gt;("..z.."), ")
-cecho(wytrzymalosc.." &lt;yellow_green&gt;("..w.."), ")
-cecho(inteligencja.." &lt;yellow_green&gt;("..i.."), ")
-cecho(madrosc.." &lt;yellow_green&gt;(" ..m..") i ")
-cecho(odwaga.." &lt;yellow_green&gt;("..o..").")
-cechy_policzlvl(s,z,w,i,m,o)
-end
-
-function postepy_wyswietl(postep)
- cecho(postepyall[postep].." postepy, odkad pojawilas sie w tym swiecie.")
-end
-
-function cechy_policzlvl(sila,zrecznosc,wytrzymalosc,inteligencja,madrosc,odwaga)
-  local level = sila+zrecznosc+wytrzymalosc+inteligencja+madrosc+odwaga
-  local bojowe = sila+zrecznosc+wytrzymalosc
-  local mentalne = inteligencja+madrosc
-  local procentbojowych = bojowe/level*100
-  local procentmentalnych = mentalne/level*100
-  cecho("\n&lt;dark_goldenrod&gt;Masz "..level.."/312 cech. Bojowe: "..bojowe.." ("..math.floor(procentbojowych).."%), mentalne: "..mentalne.." ("..math.floor(procentmentalnych).."%).")
-end
-
-
--- PO FUNKCJACH, WYWOLANIE
-
+					<script>
 local sila = matches[2]
 local zrecznosc = matches[3]
 local wytrzymalosc = matches[4]
@@ -2785,31 +2753,37 @@ end
 	</TimerPackage>
 	<AliasPackage>
 		<AliasGroup isActive="yes" isFolder="yes">
-			<name>deleteOldProfiles</name>
+			<name>warlock</name>
 			<script></script>
 			<command></command>
-			<packageName>deleteOldProfiles</packageName>
+			<packageName>warlock</packageName>
 			<regex></regex>
-			<Alias isActive="yes" isFolder="no">
-				<name>delete old profiles</name>
-				<script>deleteOldProfiles(matches[3], matches[2]=="maps")
+			<AliasGroup isActive="yes" isFolder="yes">
+				<name>deleteOldProfiles</name>
+				<script></script>
+				<command></command>
+				<packageName>deleteOldProfiles</packageName>
+				<regex></regex>
+				<Alias isActive="yes" isFolder="no">
+					<name>delete old profiles</name>
+					<script>deleteOldProfiles(matches[3], matches[2]=="maps")
 
 --Syntax examples: "delete old profiles"  -&gt; deletes profiles older than 31 days
 --					"delete old maps 10"	-&gt; deletes maps older than 10 days</script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^delete old (profiles|maps)(?: (\d+))?$</regex>
+				</Alias>
+			</AliasGroup>
+			<AliasGroup isActive="yes" isFolder="yes">
+				<name>run-lua-code-v4</name>
+				<script></script>
 				<command></command>
-				<packageName></packageName>
-				<regex>^delete old (profiles|maps)(?: (\d+))?$</regex>
-			</Alias>
-		</AliasGroup>
-		<AliasGroup isActive="yes" isFolder="yes">
-			<name>run-lua-code-v4</name>
-			<script></script>
-			<command></command>
-			<packageName>run-lua-code-v4</packageName>
-			<regex></regex>
-			<Alias isActive="yes" isFolder="no">
-				<name>run lua code</name>
-				<script>local f, e = loadstring("return "..matches[2])
+				<packageName>run-lua-code-v4</packageName>
+				<regex></regex>
+				<Alias isActive="yes" isFolder="no">
+					<name>run lua code</name>
+					<script>local f, e = loadstring("return "..matches[2])
 if not f then
   f, e = assert(loadstring(matches[2]))
 end
@@ -2821,63 +2795,63 @@ local r =
     end
   end
 r(f())</script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^lua (.*)$</regex>
+				</Alias>
+			</AliasGroup>
+			<AliasGroup isActive="yes" isFolder="yes">
+				<name>send-text-to-all-games</name>
+				<script></script>
 				<command></command>
-				<packageName></packageName>
-				<regex>^lua (.*)$</regex>
-			</Alias>
-		</AliasGroup>
-		<AliasGroup isActive="yes" isFolder="yes">
-			<name>send-text-to-all-games</name>
-			<script></script>
-			<command></command>
-			<packageName>send-text-to-all-games</packageName>
-			<regex></regex>
-			<Alias isActive="yes" isFolder="no">
-				<name>Send text to all games with :</name>
-				<script>-- prefix with : to send text or run an alias in all open profiles that have this script installed
+				<packageName>send-text-to-all-games</packageName>
+				<regex></regex>
+				<Alias isActive="yes" isFolder="no">
+					<name>Send text to all games with :</name>
+					<script>-- prefix with : to send text or run an alias in all open profiles that have this script installed
 -- for example - :hi or :follow bob
 local matchedText = matches[2]
 expandAlias(matchedText)
 raiseGlobalEvent("sysSendAllProfiles", matchedText)
 </script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^:(.*)$</regex>
+				</Alias>
+			</AliasGroup>
+			<AliasGroup isActive="yes" isFolder="yes">
+				<name>echo</name>
+				<script></script>
 				<command></command>
-				<packageName></packageName>
-				<regex>^:(.*)$</regex>
-			</Alias>
-		</AliasGroup>
-		<AliasGroup isActive="yes" isFolder="yes">
-			<name>echo</name>
-			<script></script>
-			<command></command>
-			<packageName>echo</packageName>
-			<regex></regex>
-			<Alias isActive="yes" isFolder="no">
-				<name>`echo</name>
-				<script>local s = matches[2]
+				<packageName>echo</packageName>
+				<regex></regex>
+				<Alias isActive="yes" isFolder="no">
+					<name>`echo</name>
+					<script>local s = matches[2]
 
 s = string.gsub(s, "%$", "\n")
 feedTriggers("\n" .. s .. "\n")
 echo("\n")</script>
-				<command></command>
-				<packageName></packageName>
-				<regex>`echo (.+)</regex>
-			</Alias>
-		</AliasGroup>
-		<AliasGroup isActive="yes" isFolder="yes">
-			<name>warlock</name>
-			<script></script>
-			<command></command>
-			<packageName>warlock</packageName>
-			<regex></regex>
+					<command></command>
+					<packageName></packageName>
+					<regex>`echo (.+)</regex>
+				</Alias>
+			</AliasGroup>
 			<AliasGroup isActive="yes" isFolder="yes">
-				<name>aliasy</name>
+				<name>warlock</name>
 				<script></script>
 				<command></command>
-				<packageName></packageName>
+				<packageName>warlock</packageName>
 				<regex></regex>
-				<Alias isActive="yes" isFolder="no">
-					<name>eval</name>
-					<script>local f, e = loadstring(matches[2]);
+				<AliasGroup isActive="yes" isFolder="yes">
+					<name>aliasy</name>
+					<script></script>
+					<command></command>
+					<packageName></packageName>
+					<regex></regex>
+					<Alias isActive="yes" isFolder="no">
+						<name>eval</name>
+						<script>local f, e = loadstring(matches[2]);
 if(f ~= nil) then
 	local a, b, c = f();
 	if a ~= nil then echo ("A:  "); display(a, nil, 1); end
@@ -2886,41 +2860,41 @@ if(f ~= nil) then
 end
 if e ~= nil then echo ("Er: "); display(e, nil, 1); end
 </script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/eval (.*)</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>version</name>
-					<script>echo("Skrypty wersja " .. scriptsVersion .. "\n")</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/version$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>paste</name>
-					<script>tempTimer(0, [[ start_paste("]] .. matches[2] .. [[") ]])</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/paste (.+)</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>quit</name>
-					<script>os.exit()</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/quit$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>help</name>
-					<script>displayHelp()</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/(help|pomoc)$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>zabici</name>
-					<script>--display(zabici)
+						<command></command>
+						<packageName></packageName>
+						<regex>^/eval (.*)</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>version</name>
+						<script>echo("Skrypty wersja " .. scriptsVersion .. "\n")</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/version$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>paste</name>
+						<script>tempTimer(0, [[ start_paste("]] .. matches[2] .. [[") ]])</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/paste (.+)</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>quit</name>
+						<script>os.exit()</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/quit$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>help</name>
+						<script>displayHelp()</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/(help|pomoc)$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>zabici</name>
+						<script>--display(zabici)
 if(table.size(zabici) == 0) then
 	echo("Dzis nikt jeszcze nikogo nie zabil. Przynajmniej niczego takiego nie widzielismy.\n")
 	return
@@ -2934,13 +2908,13 @@ for i, z in pairs(zabici) do
 	end
 	echo("- Razem: " .. suma .. "\n")
 end</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/zabici$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>debug</name>
-					<script>local temat = matches[3] or "lista"
+						<command></command>
+						<packageName></packageName>
+						<regex>^/zabici$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>debug</name>
+						<script>local temat = matches[3] or "lista"
 
 if(temat == "lista") then
 	echo("/debug (stats|...)\n")
@@ -2956,20 +2930,20 @@ if(temat == "stats") then
 	end
 	return
 end</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/debug($| (.*))</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>del_enemy</name>
-					<script>hideEnemyStatsFor(matches[2])</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/del_enemy (.+)</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>akcja</name>
-					<script>local args = matches[3]
+						<command></command>
+						<packageName></packageName>
+						<regex>^/debug($| (.*))</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>del_enemy</name>
+						<script>hideEnemyStatsFor(matches[2])</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/del_enemy (.+)</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>akcja</name>
+						<script>local args = matches[3]
 local co, cmd
 
 if(args == nil) then
@@ -3004,34 +2978,34 @@ else
 	echo("    Akcja dla " .. co .. " ustawiona na: " .. cmd .. "\n")
 end
 remember("akcja")</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/akcja( (.+)|$)</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>kolory</name>
+						<script>showColors()</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/kolory$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>statsfix</name>
+						<script>cleanupStatLeftovers()</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/statsfix$</regex>
+					</Alias>
+				</AliasGroup>
+				<AliasGroup isActive="yes" isFolder="yes">
+					<name>Wyjscia</name>
+					<script></script>
 					<command></command>
 					<packageName></packageName>
-					<regex>^/akcja( (.+)|$)</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>kolory</name>
-					<script>showColors()</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/kolory$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>statsfix</name>
-					<script>cleanupStatLeftovers()</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/statsfix$</regex>
-				</Alias>
-			</AliasGroup>
-			<AliasGroup isActive="yes" isFolder="yes">
-				<name>Wyjscia</name>
-				<script></script>
-				<command></command>
-				<packageName></packageName>
-				<regex></regex>
-				<Alias isActive="yes" isFolder="no">
-					<name>roomInfo</name>
-					<script>--/roomInfo
+					<regex></regex>
+					<Alias isActive="yes" isFolder="no">
+						<name>roomInfo</name>
+						<script>--/roomInfo
 echo("Obszar: " .. getRoomAreaName(currentRoom.areaId) .. "(" .. currentRoom.areaId .. "), lokacji: " .. table.size(getAreaRooms(currentRoom.areaId)) .. "\n")
 echo("Nazwa lokacji: " .. getRoomName(currentRoom.id) .. "(" .. currentRoom.id .. ")\n")
 local x,y,z = getRoomCoordinates(currentRoom.id)
@@ -3044,32 +3018,32 @@ if(serv ~= nil) then
 		echo("Usluga na lokacji: " .. serv.type .. "\n")
 	end
 end</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/roomInfo$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>clearArea</name>
-					<script>local areaID = getRoomArea(currentRoom.id)
+						<command></command>
+						<packageName></packageName>
+						<regex>^/roomInfo$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>clearArea</name>
+						<script>local areaID = getRoomArea(currentRoom.id)
 echo("Usuwam aktualny obszar: " .. getRoomAreaName(areaID) .. " (id " .. areaID .. ")\n")
 deleteArea(areaID)
 
 makeMapRoom(currentRoom.room)
 </script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/clearArea$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>clearMap</name>
-					<script>clearMap()</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/clearMap$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>areas</name>
-					<script>-- /areas
+						<command></command>
+						<packageName></packageName>
+						<regex>^/clearArea$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>clearMap</name>
+						<script>clearMap()</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/clearMap$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>areas</name>
+						<script>-- /areas
 local areas = getAreaTableSwap()
 for id, area in pairs(areas) do
 	local arealoc = getAreaRooms(id) 
@@ -3079,125 +3053,72 @@ for id, area in pairs(areas) do
 end
 
 </script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/areas$</regex>
-				</Alias>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/areas$</regex>
+					</Alias>
+					<AliasGroup isActive="yes" isFolder="yes">
+						<name>drzwi</name>
+						<script></script>
+						<command></command>
+						<packageName></packageName>
+						<regex></regex>
+						<Alias isActive="yes" isFolder="no">
+							<name>addDoor</name>
+							<script>--Wyjscia::drzwi::addDoor
+setDoor(currentRoom.id, matches[2], matches[3])</script>
+							<command></command>
+							<packageName></packageName>
+							<regex>^/drzwi ([a-z]+) (0|1|2|3)</regex>
+						</Alias>
+					</AliasGroup>
+				</AliasGroup>
 				<AliasGroup isActive="yes" isFolder="yes">
-					<name>drzwi</name>
+					<name>Kontenery</name>
 					<script></script>
 					<command></command>
 					<packageName></packageName>
 					<regex></regex>
 					<Alias isActive="yes" isFolder="no">
-						<name>addDoor</name>
-						<script>--Wyjscia::drzwi::addDoor
-setDoor(currentRoom.id, matches[2], matches[3])</script>
-						<command></command>
-						<packageName></packageName>
-						<regex>^/drzwi ([a-z]+) (0|1|2|3)</regex>
-					</Alias>
-				</AliasGroup>
-			</AliasGroup>
-			<AliasGroup isActive="yes" isFolder="yes">
-				<name>Kontenery</name>
-				<script></script>
-				<command></command>
-				<packageName></packageName>
-				<regex></regex>
-				<Alias isActive="yes" isFolder="no">
-					<name>cont_reset</name>
-					<script>function deleteSaveFile(cont)
+						<name>cont_reset</name>
+						<script>function deleteSaveFile(cont)
   --display(cont.name)
   cont:deleteSaveFile()
 end
 
 Adjustable.Container:doAll(deleteSaveFile)
 </script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/cont_reset$</regex>
-				</Alias>
-				<Alias isActive="yes" isFolder="no">
-					<name>cont_show_all</name>
-					<script>Adjustable.Container:showAll()</script>
-					<command></command>
-					<packageName></packageName>
-					<regex>^/cont_show_all$</regex>
-				</Alias>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/cont_reset$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>cont_show_all</name>
+						<script>Adjustable.Container:showAll()</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^/cont_show_all$</regex>
+					</Alias>
+				</AliasGroup>
 			</AliasGroup>
 		</AliasGroup>
 	</AliasPackage>
-	<ActionPackage>
-		<ActionGroup isActive="yes" isFolder="yes" isPushButton="no" isFlatButton="no" useCustomLayout="no">
+	<ActionPackage />
+	<ScriptPackage>
+		<ScriptGroup isActive="yes" isFolder="yes">
 			<name>warlock</name>
 			<packageName>warlock</packageName>
 			<script></script>
-			<css></css>
-			<commandButtonUp></commandButtonUp>
-			<commandButtonDown></commandButtonDown>
-			<icon></icon>
-			<orientation>0</orientation>
-			<location>0</location>
-			<posX>0</posX>
-			<posY>0</posY>
-			<mButtonState>1</mButtonState>
-			<sizeX>0</sizeX>
-			<sizeY>0</sizeY>
-			<buttonColumn>1</buttonColumn>
-			<buttonRotation>0</buttonRotation>
-			<buttonColor>#ffffff</buttonColor>
-			<ActionGroup isActive="no" isFolder="yes" isPushButton="no" isFlatButton="yes" useCustomLayout="no">
-				<name>new toolbar</name>
-				<packageName></packageName>
-				<script></script>
-				<css></css>
-				<commandButtonUp></commandButtonUp>
-				<commandButtonDown></commandButtonDown>
-				<icon></icon>
-				<orientation>0</orientation>
-				<location>0</location>
-				<posX>0</posX>
-				<posY>0</posY>
-				<mButtonState>1</mButtonState>
-				<sizeX>7274605</sizeX>
-				<sizeY>7929975</sizeY>
-				<buttonColumn>4</buttonColumn>
-				<buttonRotation>0</buttonRotation>
-				<buttonColor>#ffffff</buttonColor>
-				<Action isActive="yes" isFolder="no" isPushButton="no" isFlatButton="yes" useCustomLayout="no">
-					<name>new button</name>
-					<packageName></packageName>
-					<script>echo("Test from script!\n")</script>
-					<css>background-color: green;
-</css>
-					<commandButtonUp></commandButtonUp>
-					<commandButtonDown>powiedz say from MUD</commandButtonDown>
-					<icon></icon>
-					<orientation>1</orientation>
-					<location>0</location>
-					<posX>0</posX>
-					<posY>0</posY>
-					<mButtonState>1</mButtonState>
-					<sizeX>-1</sizeX>
-					<sizeY>7602180</sizeY>
-					<buttonColumn>1</buttonColumn>
-					<buttonRotation>0</buttonRotation>
-					<buttonColor>#ffffff</buttonColor>
-				</Action>
-			</ActionGroup>
-		</ActionGroup>
-	</ActionPackage>
-	<ScriptPackage>
-		<ScriptGroup isActive="yes" isFolder="yes">
-			<name>deleteOldProfiles</name>
-			<packageName>deleteOldProfiles</packageName>
-			<script></script>
 			<eventHandlerList />
-			<Script isActive="yes" isFolder="no">
-				<name>deleteOldProfiles script</name>
-				<packageName></packageName>
-				<script>function deleteOldProfiles(keepdays_arg, delete_maps)
+			<ScriptGroup isActive="yes" isFolder="yes">
+				<name>deleteOldProfiles</name>
+				<packageName>deleteOldProfiles</packageName>
+				<script></script>
+				<eventHandlerList />
+				<Script isActive="yes" isFolder="no">
+					<name>deleteOldProfiles script</name>
+					<packageName></packageName>
+					<script>function deleteOldProfiles(keepdays_arg, delete_maps)
 
 --[[
 	Deletes old profiles/maps in the "current"/"map" folders of the Mudlet home directory.
@@ -3247,18 +3168,18 @@ Adjustable.Container:doAll(deleteSaveFile)
 	echo(string.format("\nDeletion complete. %d/%d files were removed successfully.", delnum, #profile_table))
 end
 </script>
-				<eventHandlerList />
-			</Script>
-		</ScriptGroup>
-		<ScriptGroup isActive="yes" isFolder="yes">
-			<name>warlock</name>
-			<packageName>warlock</packageName>
-			<script></script>
-			<eventHandlerList />
+					<eventHandlerList />
+				</Script>
+			</ScriptGroup>
 			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>Okienka</name>
-				<packageName></packageName>
-				<script>--Okienka
+				<name>warlock</name>
+				<packageName>warlock</packageName>
+				<script></script>
+				<eventHandlerList />
+				<ScriptGroup isActive="yes" isFolder="yes">
+					<name>Okienka</name>
+					<packageName></packageName>
+					<script>--Okienka
 -- globalne obiekty
 --containerLeft, containerRight, containerTop, containerBottom = nil
 --minimap, minimapExits = nil
@@ -3271,11 +3192,11 @@ function debugmsg(msg)
 		cecho("  &lt;yellow:dim_grey&gt;--&lt;yellow:black&gt;" .. msg .. "\n")
 	end
 end</script>
-				<eventHandlerList />
-				<Script isActive="yes" isFolder="no">
-					<name>GeyserExt</name>
-					<packageName></packageName>
-					<script>--Okienka::GeyserExt::LayoutBox
+					<eventHandlerList />
+					<Script isActive="yes" isFolder="no">
+						<name>GeyserExt</name>
+						<packageName></packageName>
+						<script>--Okienka::GeyserExt::LayoutBox
 Geyser.LayoutBox = Geyser.Container:new({
       name = "LayoutBoxClass"
    })
@@ -3410,12 +3331,12 @@ function Geyser.LayoutBox:new(cons, container)
    self.__index = self
    return me
 end</script>
-					<eventHandlerList />
-				</Script>
-				<Script isActive="yes" isFolder="no">
-					<name>utils</name>
-					<packageName></packageName>
-					<script>-- Okienka::utils
+						<eventHandlerList />
+					</Script>
+					<Script isActive="yes" isFolder="no">
+						<name>utils</name>
+						<packageName></packageName>
+						<script>-- Okienka::utils
 -- cala obsluga okienek, robienia i usuwania elementow etc
 
 elementsPool = elementsPool or {}
@@ -3526,17 +3447,17 @@ function createBox(parent, name, thickness, color)
 	borders[4] = createNewLabel({name=name.."b4", x = "100%", y = 0, width = thickness, height = "100%",	bgColor = color}, parent)
 	return borders
 end</script>
-					<eventHandlerList />
-				</Script>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>stats_grp</name>
-					<packageName></packageName>
-					<script>-- stats_grp</script>
-					<eventHandlerList />
-					<Script isActive="yes" isFolder="no">
-						<name>stats</name>
+						<eventHandlerList />
+					</Script>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>stats_grp</name>
 						<packageName></packageName>
-						<script>-- stats
+						<script>-- stats_grp</script>
+						<eventHandlerList />
+						<Script isActive="yes" isFolder="no">
+							<name>stats</name>
+							<packageName></packageName>
+							<script>-- stats
 
 paski_ja = {
 	{"kondycja", "rgb(0, 180, 0, 255)", "rgb(100, 5, 0, 200)"},
@@ -3837,13 +3758,13 @@ function getEnemiesFor(id)
 	end
 	return t
 end</script>
-						<eventHandlerList />
-					</Script>
-				</ScriptGroup>
-				<Script isActive="yes" isFolder="no">
-					<name>czat_windows</name>
-					<packageName></packageName>
-					<script>-- Czat
+							<eventHandlerList />
+						</Script>
+					</ScriptGroup>
+					<Script isActive="yes" isFolder="no">
+						<name>czat_windows</name>
+						<packageName></packageName>
+						<script>-- Czat
 
 -- Pokazuje odpowiednie okienko czatu
 function showContainerByName(name)
@@ -3930,12 +3851,12 @@ function createChatWindows(window)
 	wizContainer:hide() -- ukryte domyslnie, po co ono...
 end
 </script>
-					<eventHandlerList />
-				</Script>
-				<Script isActive="yes" isFolder="no">
-					<name>startup</name>
-					<packageName></packageName>
-					<script>--Okienka::startup
+						<eventHandlerList />
+					</Script>
+					<Script isActive="yes" isFolder="no">
+						<name>startup</name>
+						<packageName></packageName>
+						<script>--Okienka::startup
 win_created = win_created or false
 stats_created = stats_created or false
 
@@ -4048,29 +3969,29 @@ end
 okienka_startup()
 loadWindowLayout()
 </script>
-					<eventHandlerList />
-				</Script>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>events</name>
-					<packageName></packageName>
-					<script></script>
-					<eventHandlerList />
-					<Script isActive="yes" isFolder="no">
-						<name>userWindowResize</name>
+						<eventHandlerList />
+					</Script>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>events</name>
 						<packageName></packageName>
-						<script>function userWindowResize()
+						<script></script>
+						<eventHandlerList />
+						<Script isActive="yes" isFolder="no">
+							<name>userWindowResize</name>
+							<packageName></packageName>
+							<script>function userWindowResize()
   saveWindowLayout()
 end</script>
-						<eventHandlerList>
-							<string>sysUserWindowResizeEvent</string>
-						</eventHandlerList>
-					</Script>
+							<eventHandlerList>
+								<string>sysUserWindowResizeEvent</string>
+							</eventHandlerList>
+						</Script>
+					</ScriptGroup>
 				</ScriptGroup>
-			</ScriptGroup>
-			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>Wyjscia</name>
-				<packageName></packageName>
-				<script>--Wyjscia
+				<ScriptGroup isActive="yes" isFolder="yes">
+					<name>Wyjscia</name>
+					<packageName></packageName>
+					<script>--Wyjscia
 mudlet = mudlet or {}
 mudlet.mapper_script = true
 
@@ -4393,18 +4314,18 @@ function enrichMapRoom(room)
 	insertVisibleDoors(roomId, room.drzwi)
 end
 </script>
-				<eventHandlerList />
-				<Script isActive="yes" isFolder="no">
-					<name>startup</name>
-					<packageName></packageName>
-					<script>--Wyjscia::startup
-setupRoomColors()</script>
 					<eventHandlerList />
-				</Script>
-				<Script isActive="yes" isFolder="no">
-					<name>minimap</name>
-					<packageName></packageName>
-					<script>--Wyjscia::minimap
+					<Script isActive="yes" isFolder="no">
+						<name>startup</name>
+						<packageName></packageName>
+						<script>--Wyjscia::startup
+setupRoomColors()</script>
+						<eventHandlerList />
+					</Script>
+					<Script isActive="yes" isFolder="no">
+						<name>minimap</name>
+						<packageName></packageName>
+						<script>--Wyjscia::minimap
 function displaySpecialExits(exits)
 	for k, v in ipairs(exits) do
 		fg(minimapExits.name, "dark_olive_green")
@@ -4463,12 +4384,12 @@ function drawExitsOnConsole(exits)
 	currentRoom.specialExits = s
 end
 </script>
-					<eventHandlerList />
-				</Script>
-				<Script isActive="no" isFolder="no">
-					<name>speedwalk</name>
-					<packageName></packageName>
-					<script>--Wyjscia::speedwalk
+						<eventHandlerList />
+					</Script>
+					<Script isActive="no" isFolder="no">
+						<name>speedwalk</name>
+						<packageName></packageName>
+						<script>--Wyjscia::speedwalk
 speedWalkStep = 1
 lazikWaiting = false
 
@@ -4591,12 +4512,12 @@ function wyjdzSpecjalnym()
 	end
 	echo("    Zbyt wiele wyjsc specjalnych!\n")
 end</script>
-					<eventHandlerList />
-				</Script>
-				<Script isActive="yes" isFolder="no">
-					<name>map_support</name>
-					<packageName></packageName>
-					<script>--map support scripts
+						<eventHandlerList />
+					</Script>
+					<Script isActive="yes" isFolder="no">
+						<name>map_support</name>
+						<packageName></packageName>
+						<script>--map support scripts
 function findAreaID(areaname)
   local list = getAreaTable()
 
@@ -4645,13 +4566,13 @@ function echoRoomList(areaId)
   end
 end
 </script>
-					<eventHandlerList />
-				</Script>
-			</ScriptGroup>
-			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>Utils</name>
-				<packageName></packageName>
-				<script>--Utils
+						<eventHandlerList />
+					</Script>
+				</ScriptGroup>
+				<ScriptGroup isActive="yes" isFolder="yes">
+					<name>Utils</name>
+					<packageName></packageName>
+					<script>--Utils
 wycinanie_id = wycinanie_id or {}
 seq_id_wycinania = seq_id_wycinania or 0
 kolejka_komend = kolejka_komend or {}
@@ -4686,11 +4607,11 @@ function killAll()
 end
 
 </script>
-				<eventHandlerList />
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>odmiana</name>
-					<packageName></packageName>
-					<script>--odmiana
+					<eventHandlerList />
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>odmiana</name>
+						<packageName></packageName>
+						<script>--odmiana
 odmiana = odmiana or {}
 seq_id_odmiana = seq_id_odmiana or 0
 odmiana_id = odmiana_id or {}
@@ -4744,12 +4665,12 @@ function sprawdzOdmianyKondycja(komenda, callback_fun)
 	send("!" .. komenda, false)
 end
 </script>
-					<eventHandlerList />
-				</ScriptGroup>
-				<Script isActive="yes" isFolder="no">
-					<name>idleTimer</name>
-					<packageName></packageName>
-					<script>--Utils::idleTimer
+						<eventHandlerList />
+					</ScriptGroup>
+					<Script isActive="yes" isFolder="no">
+						<name>idleTimer</name>
+						<packageName></packageName>
+						<script>--Utils::idleTimer
 last_send_time = last_send_time or getTime()
 
 function idleTimer(event_name)
@@ -4760,14 +4681,14 @@ function getIdleTime()
 	local now = getTime()
 	return (now.sec + now.min * 60 + now.hour * 3600) - (last_send_time.sec + last_send_time.min * 60 + last_send_time.hour * 3600)
 end</script>
-					<eventHandlerList>
-						<string>sysDataSendRequest</string>
-					</eventHandlerList>
-				</Script>
-				<Script isActive="yes" isFolder="no">
-					<name>mapper</name>
-					<packageName></packageName>
-					<script>--Utils::mapper
+						<eventHandlerList>
+							<string>sysDataSendRequest</string>
+						</eventHandlerList>
+					</Script>
+					<Script isActive="yes" isFolder="no">
+						<name>mapper</name>
+						<packageName></packageName>
+						<script>--Utils::mapper
 function clearMap()
 	for k, v in pairs(getAreaTable()) do
 		echo("Removing area: " .. k .. "\n")
@@ -4775,12 +4696,12 @@ function clearMap()
 	end
 end
 </script>
-					<eventHandlerList />
-				</Script>
-				<Script isActive="yes" isFolder="no">
-					<name>paste_cmd</name>
-					<packageName></packageName>
-					<script>--Utils::paste_cmd
+						<eventHandlerList />
+					</Script>
+					<Script isActive="yes" isFolder="no">
+						<name>paste_cmd</name>
+						<packageName></packageName>
+						<script>--Utils::paste_cmd
 paste_enabled = paste_enabled or nil
 paste_alias_id = paste_alias_id or nil
 
@@ -4807,318 +4728,120 @@ function start_paste(cmd)
 	paste_alias_id = tempAlias("^(.+)", [[paste_cmd(matches[2])]])
 	echo("Entering PASTE mode. Type /paste_end to end.\n")
 end</script>
-					<eventHandlerList />
-				</Script>
-			</ScriptGroup>
-			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>opisy_poziomow</name>
-				<packageName></packageName>
-				<script></script>
-				<eventHandlerList />
+						<eventHandlerList />
+					</Script>
+				</ScriptGroup>
 				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>opis_cech_poziomu</name>
+					<name>opisy_poziomow</name>
 					<packageName></packageName>
-					<script>-- LEVELE
-lvlall = {}
-lvlnazwy = {}
-lvlall[1] = 6;  lvlnazwy[1] = "(Poziom 1/13)"; -- do 6
-lvlall[2] = 12; lvlnazwy[2]="(Poziom 2/13)"; -- do 12
-lvlall[3] = 18; lvlnazwy[3] = "(Poziom 3/13)"; -- do 18
-lvlall[4] = 24; lvlnazwy[4] = "(Poziom 4/13)"; -- do 24
-lvlall[5] = 30; lvlnazwy[5] = "(Poziom 5/13)"; -- do 30
-lvlall[6] = 36; lvlnazwy[6] = "(Poziom 6/13)"; -- do 36
-lvlall[7] = 42; lvlnazwy[7] ="(Poziom 7/13)"; -- do 42
-lvlall[8] = 48; lvlnazwy[8] = "(Poziom 8/13)"; -- do 48
-lvlall[9] = 54; lvlnazwy[9] ="(Poziom 9/13)"; -- do 54
-lvlall[10]= 60; lvlnazwy[10] ="(Poziom 10/13)"; -- do 60
-lvlall[11]= 66; lvlnazwy[11] = "(Poziom 11/13)"; -- do 66
-lvlall[12]= 70; lvlnazwy[12] ="(Poziom 12/13)"; -- do 72
-lvlall[13]= 78; lvlnazwy[13] = "(Poziom 13/13)"; -- do 78
-
--- CECHY SILA
+					<script></script>
+					<eventHandlerList />
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>opis_cech_poziomu</name>
+						<packageName></packageName>
+						<script>-- CECHY SILA
 silaall = {}
-silaall["slabiutka"] = "1"; silaall["slabiutki"] = "1";
-silaall["slabowity"] = "2"; silaall["slabowita"] = "2";
-silaall["watly"] = "3"; silaall["watla"] = "3";
-silaall["cherlawy"] = "4"; silaall["cherlawa"] = "4";
-silaall["slaba"] = "5"; silaall["slaby"] = "5";
-silaall["krzepki"] = "6"; silaall["krzepka"] = "6";
-silaall["silny"] = "7"; silaall["silna"] = "7";
-silaall["mocny"] = "8"; silaall["mocna"] = "8";
-silaall["tega"] = "9"; silaall["tegi"] = "9";
-silaall["potezny"] = "10"; silaall["potezna"] = "10";
-silaall["mocarny"] = "11"; silaall["mocarna"] = "11";
-silaall["tytaniczny"] = "12"; silaall["tytaniczna"] = "12";
-silaall["wszechmocny"] = "13"; silaall["wszechmocna"] = "13";
-
-silaall["slabiutki jak na polboga"] = "14"; silaall["slabiutka jak na polboginie"] = "14";
-silaall["slabowity jak na polboga"] = "15"; silaall["slabowita jak na polboginie"] = "15";
-silaall["watly jak na polboga"] = "16"; silaall["watla jak na polboginie"] = "16";
-silaall["cherlawy jak na polboga"] = "17"; silaall["cherlawa jak na polboginie"] = "17";
-silaall["slaby jak na polboga"] = "18"; silaall["slaba jak na polboginie"] = "18";
-silaall["krzepki jak na polboga"] = "19"; silaall["krzepka jak na polboginie"] = "19";
-silaall["silny jak na polboga"] = "20"; silaall["silna jak na polboginie"] = "20";
-silaall["mocny jak na polboga"] = "21"; silaall["mocna jak na polboginie"] = "21";
-silaall["tega jak na polboga"] = "22"; silaall["tegi jak na polboginie"] = "22";
-silaall["potezny jak na polboga"] = "23"; silaall["potezna jak na polboginie"] = "23";
-silaall["mocarny jak na polboga"] = "24"; silaall["mocarna jak na polboginie"] = "24";
-silaall["tytaniczny jak na polboga"] = "25"; silaall["tytaniczna jak na polboginie"] = "25";
-silaall["wszechmocny jak na polboga"] = "26"; silaall["wszechmocna jak na polboginie"] = "26";
-
-silaall["slabiutki jak na boga"] = "27"; silaall["slabiutka jak na boginie"] = "27";
-silaall["slabowity jak na boga"] = "28"; silaall["slabowita jak na boginie"] = "28";
-silaall["watly jak na boga"] = "29"; silaall["watla jak na boginie"] = "29";
-silaall["cherlawy jak na boga"] = "30"; silaall["cherlawa jak na boginie"] = "30";
-silaall["slaby jak na boga"] = "31"; silaall["slaba jak na boginie"] = "31";
-silaall["krzepki jak na boga"] = "32"; silaall["krzepka jak na boginie"] = "32";
-silaall["silny jak na boga"] = "33"; silaall["silna jak na boginie"] = "33";
-silaall["mocny jak na boga"] = "34"; silaall["mocna jak na boginie"] = "34";
-silaall["tega jak na boga"] = "35"; silaall["tegi jak na boginie"] = "35";
-silaall["potezny jak na boga"] = "36"; silaall["potezna jak na boginie"] = "36";
-silaall["mocarny jak na boga"] = "37"; silaall["mocarna jak na boginie"] = "37";
-silaall["tytaniczny jak na boga"] = "38"; silaall["tytaniczna jak na boginie"] = "38";
-silaall["wszechmocny jak na boga"] = "39"; silaall["wszechmocna jak na boginie"] = "39";
-
-
-
+silaall["slabiutk"] = 1;
+silaall["slabowit"] = 2;
+silaall["watl"] = 3;
+silaall["cherlaw"] = 4;
+silaall["slab"] = 5;
+silaall["krzepk"] = 6;
+silaall["siln"] = 7;
+silaall["mocn"] = 8;
+silaall["teg"] = 9;
+silaall["potezn"] = 10;
+silaall["mocarn"] = 11;
+silaall["tytaniczn"] = 12;
+silaall["wszechmocn"] = 13;
 
 
 -- CECHY ZRECZNOSC
 zrecznoscall ={}
-zrecznoscall["nieskoordynowany"] = "1"; zrecznoscall["nieskoordynowana"] = "1";
-zrecznoscall["niezdarny"] = "2"; zrecznoscall["niezdarna"] = "2";
-zrecznoscall["niezreczny"] = "3"; zrecznoscall["niezreczna"] = "3";
-zrecznoscall["niezgrabny"] = "4"; zrecznoscall["niezgrabna"] = "4";
-zrecznoscall["niewprawny"] = "5"; zrecznoscall["niewprawna"] = "5";
-zrecznoscall["sprawny"] = "6"; zrecznoscall["sprawna"] = "6";
-zrecznoscall["zreczny"] = "7"; zrecznoscall["zreczna"] = "7";
-zrecznoscall["szybki"] = "8"; zrecznoscall["szybka"] = "8";
-zrecznoscall["wprawny"] = "9"; zrecznoscall["wprawna"] = "9";
-zrecznoscall["zwinny"] = "10"; zrecznoscall["zwinna"] = "10";
-zrecznoscall["gibki"] = "11"; zrecznoscall["gibka"] = "11";
-zrecznoscall["akrobatyczny"] = "12"; zrecznoscall["akrobatyczna"] = "12";
-zrecznoscall["ekwilibrystyczny"] = "13"; zrecznoscall["ekwilibrystyczna"] = "13"
-
-zrecznoscall["nieskoordynowany jak na polboga"] = "14"; zrecznoscall["nieskoordynowana jak na polboginie"] = "14";
-zrecznoscall["niezdarny jak na polboga"] = "15"; zrecznoscall["niezdarna jak na polboginie"] = "15";
-zrecznoscall["niezreczny jak na polboga"] = "16"; zrecznoscall["niezreczna jak na polboginie"] = "16";
-zrecznoscall["niezgrabny jak na polboga"] = "17"; zrecznoscall["niezgrabna jak na polboginie"] = "17";
-zrecznoscall["niewprawny jak na polboga"] = "18"; zrecznoscall["niewprawna jak na polboginie"] = "18";
-zrecznoscall["sprawny jak na polboga"] = "19"; zrecznoscall["sprawna jak na polboginie"] = "19";
-zrecznoscall["zreczny jak na polboga"] = "20"; zrecznoscall["zreczna jak na polboginie"] = "20";
-zrecznoscall["szybki jak na polboga"] = "21"; zrecznoscall["szybka jak na polboginie"] = "21";
-zrecznoscall["wprawny jak na polboga"] = "22"; zrecznoscall["wprawna jak na polboginie"] = "22";
-zrecznoscall["zwinny jak na polboga"] = "23"; zrecznoscall["zwinna jak na polboginie"] = "23";
-zrecznoscall["gibki jak na polboga"] = "24"; zrecznoscall["gibka jak na polboginie"] = "24";
-zrecznoscall["akrobatyczny jak na polboga"] = "25"; zrecznoscall["akrobatyczna jak na polboginie"] = "25";
-zrecznoscall["ekwilibrystyczny jak na polboga"] = "26"; zrecznoscall["ekwilibrystyczna jak na polboginie"] = "26"
-
-zrecznoscall["nieskoordynowany jak na boga"] = "27"; zrecznoscall["nieskoordynowana jak na boginie"] = "27";
-zrecznoscall["niezdarny jak na boga"] = "28"; zrecznoscall["niezdarna jak na boginie"] = "28";
-zrecznoscall["niezreczny jak na boga"] = "29"; zrecznoscall["niezreczna jak na boginie"] = "29";
-zrecznoscall["niezgrabny jak na boga"] = "30"; zrecznoscall["niezgrabna jak na boginie"] = "30";
-zrecznoscall["niewprawny jak na boga"] = "31"; zrecznoscall["niewprawna jak na boginie"] = "31";
-zrecznoscall["sprawny jak na boga"] = "32"; zrecznoscall["sprawna jak na boginie"] = "32";
-zrecznoscall["zreczny jak na boga"] = "33"; zrecznoscall["zreczna jak na boginie"] = "33";
-zrecznoscall["szybki jak na boga"] = "34"; zrecznoscall["szybka jak na boginie"] = "34";
-zrecznoscall["wprawny jak na boga"] = "35"; zrecznoscall["wprawna jak na boginie"] = "35";
-zrecznoscall["zwinny jak na boga"] = "36"; zrecznoscall["zwinna jak na boginie"] = "36";
-zrecznoscall["gibki jak na boga"] = "37"; zrecznoscall["gibka jak na boginie"] = "37";
-zrecznoscall["akrobatyczny jak na boga"] = "38"; zrecznoscall["akrobatyczna jak na boginie"] = "38";
-zrecznoscall["ekwilibrystyczny jak na boga"] = "39"; zrecznoscall["ekwilibrystyczna jak na boginie"] = "39"
-
-
-
+zrecznoscall["nieskoordynowan"] = 1;
+zrecznoscall["niezdarn"] = 2;
+zrecznoscall["niezreczn"] = 3;
+zrecznoscall["niezgrabn"] = 4;
+zrecznoscall["niewprawn"] = 5;
+zrecznoscall["sprawn"] = 6;
+zrecznoscall["zreczn"] = 7;
+zrecznoscall["szybk"] = 8;
+zrecznoscall["wprawn"] = 9;
+zrecznoscall["zwinn"] = 10;
+zrecznoscall["gibk"] = 11;
+zrecznoscall["akrobatyczn"] = 12;
+zrecznoscall["ekwilibrystyczn"] = 13;
 
 -- CECHY WYTRZYMALOSC
 wytkaall ={}
-wytkaall["delikatny"] = "1"; wytkaall["delikatna"] = "1";
-wytkaall["chorowity"] = "2"; wytkaall["chorowita"] = "2";
-wytkaall["rachityczny"] = "3"; wytkaall["rachityczna"] = "3";
-wytkaall["mizerny"] = "4"; wytkaall["mizerna"] = "4";
-wytkaall["kruchy"] = "5"; wytkaall["krucha"] = "5";
-wytkaall["dobrze zbudowany"] = "6"; wytkaall["dobrze zbudowana"] = "6";
-wytkaall["wytrzymaly"] = "7"; wytkaall["wytrzymala"] = "7";
-wytkaall["odporny"] = "8"; wytkaall["odporna"] = "8";
-wytkaall["masywny"] = "9"; wytkaall["masywna"] = "9";
-wytkaall["twardy"] = "10"; wytkaall["twarda"] = "10";
-wytkaall["umiesniony"] = "11"; wytkaall["umiesniona"] = "11";
-wytkaall["muskularny"] = "12"; wytkaall["muskularna"] = "12";
-wytkaall["atletyczny"] = "13"; wytkaall["atletyczna"] = "13"
-
-wytkaall["delikatny jak na polboga"] = "1"; wytkaall["delikatna jak na polboginie"] = "1";
-wytkaall["chorowity jak na polboga"] = "2"; wytkaall["chorowita jak na polboginie"] = "2";
-wytkaall["rachityczny jak na polboga"] = "3"; wytkaall["rachityczna jak na polboginie"] = "3";
-wytkaall["mizerny jak na polboga"] = "4"; wytkaall["mizerna jak na polboginie"] = "4";
-wytkaall["kruchy jak na polboga"] = "5"; wytkaall["krucha jak na polboginie"] = "5";
-wytkaall["dobrze zbudowany jak na polboga"] = "6"; wytkaall["dobrze zbudowana jak na polboginie"] = "6";
-wytkaall["wytrzymaly jak na polboga"] = "7"; wytkaall["wytrzymala jak na polboginie"] = "7";
-wytkaall["odporny jak na polboga"] = "8"; wytkaall["odporna jak na polboginie"] = "8";
-wytkaall["masywny jak na polboga"] = "9"; wytkaall["masywna jak na polboginie"] = "9";
-wytkaall["twardy jak na polboga"] = "10"; wytkaall["twarda jak na polboginie"] = "10";
-wytkaall["umiesniony jak na polboga"] = "11"; wytkaall["umiesniona jak na polboginie"] = "11";
-wytkaall["muskularny jak na polboga"] = "12"; wytkaall["muskularna jak na polboginie"] = "12";
-wytkaall["atletyczny jak na polboga"] = "13"; wytkaall["atletyczna jak na polboginie"] = "13"
-
-wytkaall["delikatny jak na boga"] = "1"; wytkaall["delikatna jak na boginie"] = "1";
-wytkaall["chorowity jak na boga"] = "2"; wytkaall["chorowita jak na boginie"] = "2";
-wytkaall["rachityczny jak na boga"] = "3"; wytkaall["rachityczna jak na boginie"] = "3";
-wytkaall["mizerny jak na boga"] = "4"; wytkaall["mizerna jak na boginie"] = "4";
-wytkaall["kruchy jak na boga"] = "5"; wytkaall["krucha jak na boginie"] = "5";
-wytkaall["dobrze zbudowany jak na boga"] = "6"; wytkaall["dobrze zbudowana jak na boginie"] = "6";
-wytkaall["wytrzymaly jak na boga"] = "7"; wytkaall["wytrzymala jak na boginie"] = "7";
-wytkaall["odporny jak na boga"] = "8"; wytkaall["odporna jak na boginie"] = "8";
-wytkaall["masywny jak na boga"] = "9"; wytkaall["masywna jak na boginie"] = "9";
-wytkaall["twardy jak na boga"] = "10"; wytkaall["twarda jak na boginie"] = "10";
-wytkaall["umiesniony jak na boga"] = "11"; wytkaall["umiesniona jak na boginie"] = "11";
-wytkaall["muskularny jak na boga"] = "12"; wytkaall["muskularna jak na boginie"] = "12";
-wytkaall["atletyczny jak na boga"] = "13"; wytkaall["atletyczna jak na boginie"] = "13"
-
-
-
-
+wytkaall["delikatn"] = 1;
+wytkaall["chorowit"] = 2;
+wytkaall["rachityczn"] = 3;
+wytkaall["mizern"] = 4;
+wytkaall["kruch"] = 5;
+wytkaall["dobrze zbudowan"] = 6;
+wytkaall["wytrzymal"] = 7;
+wytkaall["odporn"] = 8;
+wytkaall["masywn"] = 9;
+wytkaall["tward"] = 10;
+wytkaall["umiesnion"] = 11;
+wytkaall["muskularn"] = 12;
+wytkaall["atletyczn"] = 13;
 
 -- CECHY INTELIGENCJA
 intall = {}
-intall["bezmyslny"] = "1"; intall["bezmyslna"] = "1";
-intall["ciemny"] = "2"; intall["ciemna"] = "2";
-intall["tepy"] = "3"; intall["tepa"] = "3";
-intall["nierozumny"] = "4"; intall["nierozumna"] = "4";
-intall["ograniczony"] = "5"; intall["ograniczona"] = "5";
-intall["rozgarniety"] = "6"; intall["rozgarnieta"] = "6";
-intall["pojetny"] = "7"; intall["pojetna"] = "7";
-intall["zmyslny"] = "8"; intall["zmyslna"] = "8";
-intall["inteligentny"] = "9"; intall["inteligentna"] = "9";
-intall["lotny"] = "10"; intall["lotna"] = "10";
-intall["bystry"] = "11"; intall["bystra"] = "11";
-intall["blyskotliwy"] = "12"; intall["blyskotliwa"] = "12";
-intall["genialny"] = "13"; intall["genialna"] = "13"
-
-intall["bezmyslny jak na polboga"] = "14"; intall["bezmyslna jak na polboginie"] = "14";
-intall["ciemny jak na polboga"] = "15"; intall["ciemna jak na polboginie"] = "15";
-intall["tepy jak na polboga"] = "16"; intall["tepa jak na polboginie"] = "16";
-intall["nierozumny jak na polboga"] = "17"; intall["nierozumna jak na polboginie"] = "17";
-intall["ograniczony jak na polboga"] = "18"; intall["ograniczona jak na polboginie"] = "18";
-intall["rozgarniety jak na polboga"] = "19"; intall["rozgarnieta jak na polboginie"] = "19";
-intall["pojetny jak na polboga"] = "20"; intall["pojetna jak na polboginie"] = "20";
-intall["zmyslny jak na polboga"] = "21"; intall["zmyslna jak na polboginie"] = "21";
-intall["inteligentny jak na polboga"] = "22"; intall["inteligentna jak na polboginie"] = "22";
-intall["lotny jak na polboga"] = "23"; intall["lotna jak na polboginie"] = "23";
-intall["bystry jak na polboga"] = "24"; intall["bystra jak na polboginie"] = "24";
-intall["blyskotliwy jak na polboga"] = "25"; intall["blyskotliwa jak na polboginie"] = "25";
-intall["genialny jak na polboga"] = "26"; intall["genialna jak na polboginie"] = "26"
-
-
-intall["bezmyslny jak na boga"] = "27"; intall["bezmyslna jak na boginie"] = "27";
-intall["ciemny jak na boga"] = "28"; intall["ciemna jak na boginie"] = "28";
-intall["tepy jak na boga"] = "29"; intall["tepa jak na boginie"] = "29";
-intall["nierozumny jak na boga"] = "30"; intall["nierozumna jak na boginie"] = "30";
-intall["ograniczony jak na boga"] = "31"; intall["ograniczona jak na boginie"] = "31";
-intall["rozgarniety jak na boga"] = "32"; intall["rozgarnieta jak na boginie"] = "32";
-intall["pojetny jak na boga"] = "33"; intall["pojetna jak na boginie"] = "33";
-intall["zmyslny jak na boga"] = "34"; intall["zmyslna jak na boginie"] = "34";
-intall["inteligentny jak na boga"] = "35"; intall["inteligentna jak na boginie"] = "35";
-intall["lotny jak na boga"] = "36"; intall["lotna jak na boginie"] = "36";
-intall["bystry jak na boga"] = "37"; intall["bystra jak na boginie"] = "37";
-intall["blyskotliwy jak na boga"] = "38"; intall["blyskotliwa jak na boginie"] = "38";
-intall["genialny jak na boga"] = "39"; intall["genialna jak na boginie"] = "39"
-
-
-
+intall["bezmysln"] = 1;
+intall["ciemn"] = 2;
+intall["tep"] = 3;
+intall["nierozumn"] = 4;
+intall["ograniczon"] = 5;
+intall["rozgarniet"] = 6;
+intall["pojetn"] = 7;
+intall["zmysln"] = 8;
+intall["inteligentn"] = 9;
+intall["lotn"] = 10;
+intall["bystr"] = 11;
+intall["blyskotliw"] = 12;
+intall["genialn"] = 13;
 
 -- CECHY MADROSC
 madroscall = {}
-madroscall["glupi"] = "1"; madroscall["glupia"] = "1";
-madroscall["durny"] = "2"; madroscall["durna"] = "2";
-madroscall["zacofany"] = "3"; madroscall["zacofana"] = "3";
-madroscall["niemadry"] = "4"; madroscall["niemadra"] = "4";
-madroscall["niewyksztalcony"] = "5"; madroscall["niewyksztalcona"] = "5";
-madroscall["roztropny"] = "6"; madroscall["roztropna"] = "6";
-madroscall["wyksztalcony"] = "7"; madroscall["wyksztalcona"] = "7";
-madroscall["rozsadny"] = "8"; madroscall["rozsadna"] = "8";
-madroscall["logiczny"] = "9"; madroscall["logiczna"] = "9";
-madroscall["madry"] = "10"; madroscall["madra"] = "10";
-madroscall["uczony"] = "11"; madroscall["uczona"] = "11";
-madroscall["oswiecony"] = "12"; madroscall["oswiecona"] = "12";
-madroscall["wszechwiedzacy"] = "13"; madroscall["wszechwiedzaca"] = "13"
-
-madroscall["glupi jak na polboga"] = "14"; madroscall["glupia jak na polboginie"] = "14";
-madroscall["durny jak na polboga"] = "15"; madroscall["durna jak na polboginie"] = "15";
-madroscall["zacofany jak na polboga"] = "16"; madroscall["zacofana jak na polboginie"] = "16";
-madroscall["niemadry jak na polboga"] = "17"; madroscall["niemadra jak na polboginie"] = "17";
-madroscall["niewyksztalcony jak na polboga"] = "18"; madroscall["niewyksztalcona jak na polboginie"] = "18";
-madroscall["roztropny jak na polboga"] = "19"; madroscall["roztropna jak na polboginie"] = "19";
-madroscall["wyksztalcony jak na polboga"] = "20"; madroscall["wyksztalcona jak na polboginie"] = "20";
-madroscall["rozsadny jak na polboga"] = "21"; madroscall["rozsadna jak na polboginie"] = "21";
-madroscall["logiczny jak na polboga"] = "22"; madroscall["logiczna jak na polboginie"] = "22";
-madroscall["madry jak na polboga"] = "23"; madroscall["madra jak na polboginie"] = "23";
-madroscall["uczony jak na polboga"] = "24"; madroscall["uczona jak na polboginie"] = "24";
-madroscall["oswiecony jak na polboga"] = "25"; madroscall["oswiecona jak na polboginie"] = "25";
-madroscall["wszechwiedzacy jak na polboga"] = "26"; madroscall["wszechwiedzaca jak na polboginie"] = "26"
-
-madroscall["glupi jak na boga"] = "27"; madroscall["glupia jak na boginie"] = "27";
-madroscall["durny jak na boga"] = "28"; madroscall["durna jak na boginie"] = "28";
-madroscall["zacofany jak na boga"] = "29"; madroscall["zacofana jak na boginie"] = "29";
-madroscall["niemadry jak na boga"] = "30"; madroscall["niemadra jak na boginie"] = "30";
-madroscall["niewyksztalcony jak na boga"] = "31"; madroscall["niewyksztalcona jak na boginie"] = "31";
-madroscall["roztropny jak na boga"] = "32"; madroscall["roztropna jak na boginie"] = "32";
-madroscall["wyksztalcony jak na boga"] = "33"; madroscall["wyksztalcona jak na boginie"] = "33";
-madroscall["rozsadny jak na boga"] = "34"; madroscall["rozsadna jak na boginie jak na boginie"] = "34";
-madroscall["logiczny jak na boga"] = "35"; madroscall["logiczna jak na boginie"] = "35";
-madroscall["madry jak na boga"] = "36"; madroscall["madra jak na boginie"] = "36";
-madroscall["uczony jak na boga"] = "37"; madroscall["uczona jak na boginie"] = "37";
-madroscall["oswiecony jak na boga"] = "38"; madroscall["oswiecona jak na boginie"] = "38";
-madroscall["wszechwiedzacy jak na boga"] = "39"; madroscall["wszechwiedzaca jak na boginie"] = "39"
+madroscall["glupi"] = 1;
+madroscall["durn"] = 2;
+madroscall["zacofan"] = 3;
+madroscall["niemadr"] = 4;
+madroscall["niewyksztalcon"] = 5;
+madroscall["roztropn"] = 6;
+madroscall["wyksztalcon"] = 7;
+madroscall["rozsadn"] = 8;
+madroscall["logiczn"] = 9;
+madroscall["madr"] = 10;
+madroscall["uczon"] = 11;
+madroscall["oswiecon"] = 12;
+madroscall["wszechwiedzac"] = 13;
 
 -- CECHY ODWAGA
 odwagaall={}
-odwagaall["tchorzliwy"] ="1"; odwagaall["tchorzliwa"] ="1";
-odwagaall["strachliwy"] ="2"; odwagaall["strachliwa"] ="2";
-odwagaall["bojazliwy"] ="3"; odwagaall["bojazliwa"] ="3";
-odwagaall["lekliwy"] ="4"; odwagaall["lekliwa"] ="4";
-odwagaall["niepewny"] ="5"; odwagaall["niepewna"] ="5";
-odwagaall["zdecydowany"] ="6"; odwagaall["zdecydowana"] ="6";
-odwagaall["niezachwiany"] ="7"; odwagaall["niezachwiana"] ="7";
-odwagaall["odwazny"] ="8"; odwagaall["odwazna"] ="8";
-odwagaall["dzielny"] = "9"; odwagaall["dzielna"] = "9";
-odwagaall["nieugiety"] = "10"; odwagaall["nieugieta"] = "10";
-odwagaall["mezny"] = "11"; odwagaall["mezna"] = "11";
-odwagaall["bohaterski"] = "12"; odwagaall["braterska"] = "12";
-odwagaall["heroiczny"] = "13"; odwagaall["heroiczna"] = "13";
-
-odwagaall["tchorzliwy jak na polboga"] ="14"; odwagaall["tchorzliwa jak na polboginie"] ="14";
-odwagaall["strachliwy jak na polboga"] ="15"; odwagaall["strachliwa jak na polboginie"] ="15";
-odwagaall["bojazliwy jak na polboga"] ="16"; odwagaall["bojazliwa jak na polboginie"] ="16";
-odwagaall["lekliwy jak na polboga"] ="17"; odwagaall["lekliwa jak na polboginie"] ="17";
-odwagaall["niepewny jak na polboga"] ="18"; odwagaall["niepewna jak na polboginie"] ="18";
-odwagaall["zdecydowany jak na polboga"] ="19"; odwagaall["zdecydowana jak na polboginie"] ="19";
-odwagaall["niezachwiany jak na polboga"] ="20"; odwagaall["niezachwiana jak na polboginie"] ="20";
-odwagaall["odwazny jak na polboga"] ="21"; odwagaall["odwazna jak na polboginie"] ="21";
-odwagaall["dzielny jak na polboga"] = "22"; odwagaall["dzielna jak na polboginie"] = "22";
-odwagaall["nieugiety jak na polboga"] = "23"; odwagaall["nieugieta jak na polboginie"] = "23";
-odwagaall["mezny jak na polboga"] = "24"; odwagaall["mezna jak na polboginie"] = "24";
-odwagaall["bohaterski jak na polboga"] = "25"; odwagaall["braterska jak na polboginie"] = "25";
-odwagaall["heroiczny jak na polboga"] = "26"; odwagaall["heroiczna jak na polboginie"] = "26";
-
-odwagaall["tchorzliwy jak na boga"] ="27"; odwagaall["tchorzliwa jak na boginie"] ="27";
-odwagaall["strachliwy jak na boga"] ="28"; odwagaall["strachliwa jak na boginie"] ="28";
-odwagaall["bojazliwy jak na boga"] ="29"; odwagaall["bojazliwa jak na boginie"] ="29";
-odwagaall["lekliwy jak na boga"] ="30"; odwagaall["lekliwa jak na boginie"] ="30";
-odwagaall["niepewny jak na boga"] ="31"; odwagaall["niepewna jak na boginie"] ="31";
-odwagaall["zdecydowany jak na boga"] ="32"; odwagaall["zdecydowana jak na boginie"] ="32";
-odwagaall["niezachwiany jak na boga"] ="33"; odwagaall["niezachwiana jak na boginie"] ="33";
-odwagaall["odwazny jak na boga"] ="34"; odwagaall["odwazna jak na boginie"] ="34";
-odwagaall["dzielny jak na boga"] = "35"; odwagaall["dzielna jak na boginie"] = "35";
-odwagaall["nieugiety jak na boga"] = "36"; odwagaall["nieugieta jak na boginie"] = "36";
-odwagaall["mezny jak na boga"] = "37"; odwagaall["mezna jak na boginie"] = "37";
-odwagaall["bohaterski jak na boga"] = "38"; odwagaall["braterska jak na boginie"] = "38";
-odwagaall["heroiczny jak na boga"] = "39"; odwagaall["heroiczna jak na boginie"] = "39";</script>
-					<eventHandlerList />
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>opisy_pozostale</name>
-					<packageName></packageName>
-					<script>--opisy poziomow
+odwagaall["tchorzliw"] =1;
+odwagaall["strachliw"] =2;
+odwagaall["bojazliw"] =3;
+odwagaall["lekliw"] =4;
+odwagaall["niepewn"] =5;
+odwagaall["zdecydowan"] =6;
+odwagaall["niezachwian"] =7;
+odwagaall["odwazn"] =8;
+odwagaall["dzieln"] = 9;
+odwagaall["nieugiet"] = 10;
+odwagaall["mezn"] = 11;
+odwagaall["bohatersk"] = 12;
+odwagaall["heroiczn"] = 13;
+</script>
+						<eventHandlerList />
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>opisy_pozostale</name>
+						<packageName></packageName>
+						<script>--opisy poziomow
 require "rex_pcre"
 rex_pcre = rex_pcre or package.loaded.rex_pcre
 
@@ -5253,13 +4976,171 @@ function jakaPozycjaOpisu(tabelka, opis)
 end
 
 </script>
-					<eventHandlerList />
+						<eventHandlerList />
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>funkcje_cech_poziomu</name>
+						<packageName></packageName>
+						<script>function cechy_liczby(sila,zrecznosc,wytrzymalosc,inteligencja,madrosc,odwaga)
+  s = "&lt;red&gt;[cos poszlo nie tak]&lt;reset&gt;"
+  z = "&lt;red&gt;[cos poszlo nie tak]&lt;reset&gt;"
+  w = "&lt;red&gt;[cos poszlo nie tak]&lt;reset&gt;"
+  i = "&lt;red&gt;[cos poszlo nie tak]&lt;reset&gt;"
+  m = "&lt;red&gt;[cos poszlo nie tak]&lt;reset&gt;"
+  o = "&lt;red&gt;[cos poszlo nie tak]&lt;reset&gt;"
+  
+
+--sila
+--uciecie "jak na..."
+  if string.find(sila, " ") then
+    str = string.match(sila, '(.*) (.*) (.*) (.*)')
+    str = string.sub(str, 0, string.len(str)-1)
+  else
+    str = string.sub(sila, 0, string.len(sila)-1)
+  end
+
+  if silaall[str] then
+    s_l = silaall[str]
+    if string.find(sila, "jak na legende") then
+      s_l = s_l + 13
+    elseif string.find(sila, "jak na polboga") then
+      s_l = s_l + 26
+    elseif string.find(sila, "jak na boga") then
+      s_l = s_l + 39
+    end
+    s = sila.."&lt;yellow_green&gt; ("..s_l..")&lt;reset&gt;"
+  end
+
+
+--zrecznosc
+--uciecie "jak na..."
+  if string.find(zrecznosc, " ") then
+    str = string.match(zrecznosc, '(.*) (.*) (.*) (.*)')
+    str = string.sub(str, 0, string.len(str)-1)
+  else
+    str = string.sub(zrecznosc, 0, string.len(zrecznosc)-1)
+  end
+
+  if zrecznoscall[str] then
+    z_l = zrecznoscall[str]
+    if string.find(zrecznosc, "jak na legende") then
+      z_l = z_l + 13
+    elseif string.find(zrecznosc, "jak na polboga") then
+      z_l = z_l + 26
+    elseif string.find(zrecznosc, "jak na boga") then
+      z_l = z_l + 39
+    end
+  z = zrecznosc.."&lt;yellow_green&gt; ("..z_l..")&lt;reset&gt;"
+  end
+  
+
+  --wytka
+  --uciecie "jak na..."
+  if string.find(wytrzymalosc, " ") then
+    str = string.match(wytrzymalosc, '(.*) (.*) (.*) (.*)')
+    str = string.sub(str, 0, string.len(str)-1)
+  else
+    str = string.sub(wytrzymalosc, 0, string.len(wytrzymalosc)-1)
+  end
+  if wytkaall[str] then
+    w_l = wytkaall[str]
+    if string.find(wytrzymalosc, "jak na legende") then
+      w_l = w_l + 13
+    elseif string.find(wytrzymalosc, "jak na polboga") then
+      w_l = w_l + 26
+    elseif string.find(wytrzymalosc, "jak na boga") then
+      w_l = w_l + 39
+    end
+  w = wytrzymalosc.."&lt;yellow_green&gt; ("..w_l..")&lt;reset&gt;"
+  end
+  
+  --inteligencja
+    --uciecie "jak na..."
+  if string.find(inteligencja, " ") then
+    str = string.match(inteligencja, '(.*) (.*) (.*) (.*)')
+    str = string.sub(str, 0, string.len(str)-1)
+  else
+    str = string.sub(inteligencja, 0, string.len(inteligencja)-1)
+  end
+  
+  if intall[str] then
+    i_l = intall[str]
+    if string.find(inteligencja, "jak na legende") then
+      i_l = i_l + 13
+    elseif string.find(inteligencja, "jak na polboga") then
+      i_l = i_l + 26
+    elseif string.find(inteligencja, "jak na boga") then
+      i_l = i_l + 39
+    end
+  i = inteligencja.."&lt;yellow_green&gt; ("..i_l..")&lt;reset&gt;"
+  end
+  
+  --madrosc
+  --uciecie "jak na..."
+  if string.find(madrosc, " ") then
+    str = string.match(madrosc, '(.*) (.*) (.*) (.*)')
+    str = string.sub(str, 0, string.len(str)-1)
+  else
+    str = string.sub(madrosc, 0, string.len(madrosc)-1)
+  end
+  
+  if madroscall[str] then
+    m_l = madroscall[str]
+    if string.find(madrosc, "jak na legende") then
+      m_l = m_l + 13
+    elseif string.find(madrosc, "jak na polboga") then
+      m_l = m_l + 26
+    elseif string.find(madrosc, "jak na boga") then
+      m_l = m_l + 39
+    end
+  m = madrosc.."&lt;yellow_green&gt; ("..m_l..")&lt;reset&gt;"
+  end
+
+  --odwaga
+  --uciecie "jak na..."
+  if string.find(odwaga, " ") then
+    str = string.match(odwaga, '(.*) (.*) (.*) (.*)')
+    str = string.sub(str, 0, string.len(str)-1)
+  else
+    str = string.sub(odwaga, 0, string.len(odwaga)-1)
+  end
+  
+  str = string.sub(odwaga, 0, string.len(odwaga)-1)
+  if odwagaall[str] then
+    o_l = odwagaall[str]
+    if string.find(odwaga, "jak na legende") then
+      o_l = o_l + 13
+    elseif string.find(odwaga, "jak na polboga") then
+      o_l = o_l + 26
+    elseif string.find(odwaga, "jak na boga") then
+      o_l = o_l + 39
+    end
+  o = odwaga.."&lt;yellow_green&gt; ("..o_l..")&lt;reset&gt;"
+  end
+  cecho(s..", "..z..", "..w..", "..i..", "..m.." i "..o..".")
+  cechy_policzlvl(s_l,z_l,w_l,i_l,m_l,o_l)
+end
+
+
+function postepy_wyswietl(postep)
+ cecho(postepyall[postep].." postepy, odkad pojawilas sie w tym swiecie.")
+end
+
+function cechy_policzlvl(sila,zrecznosc,wytrzymalosc,inteligencja,madrosc,odwaga)
+  local level = sila+zrecznosc+wytrzymalosc+inteligencja+madrosc+odwaga
+  local bojowe = sila+zrecznosc+wytrzymalosc
+  local mentalne = inteligencja+madrosc
+  local procentbojowych = bojowe/level*100
+  local procentmentalnych = mentalne/level*100
+  cecho("\n&lt;dark_goldenrod&gt;Masz "..level.."/312 cech. Bojowe: "..bojowe.." ("..math.floor(procentbojowych).."%), mentalne: "..mentalne.." ("..math.floor(procentmentalnych).."%).")
+end</script>
+						<eventHandlerList />
+					</ScriptGroup>
 				</ScriptGroup>
-			</ScriptGroup>
-			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>Walka</name>
-				<packageName></packageName>
-				<script>--walka
+				<ScriptGroup isActive="yes" isFolder="yes">
+					<name>Walka</name>
+					<packageName></packageName>
+					<script>--walka
 
 function removeAllEnemiesFor(id)
 	for i, eid in ipairs(getEnemiesFor(id)) do
@@ -5274,11 +5155,11 @@ function adjustCombatOnMove()
 	end
 end
 </script>
-				<eventHandlerList />
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>statystyka</name>
-					<packageName></packageName>
-					<script>--Walka::statystyka
+					<eventHandlerList />
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>statystyka</name>
+						<packageName></packageName>
+						<script>--Walka::statystyka
 zabici = zabici or {}
 
 function dodajZabitego(kto, opis)
@@ -5287,13 +5168,13 @@ function dodajZabitego(kto, opis)
 	if(zabici[kto][opis] == nil) then zabici[kto][opis] = 0 end
 	zabici[kto][opis] = zabici[kto][opis] + 1
 end</script>
-					<eventHandlerList />
+						<eventHandlerList />
+					</ScriptGroup>
 				</ScriptGroup>
-			</ScriptGroup>
-			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>Druzyna</name>
-				<packageName></packageName>
-				<script>--Druzyna
+				<ScriptGroup isActive="yes" isFolder="yes">
+					<name>Druzyna</name>
+					<packageName></packageName>
+					<script>--Druzyna
 
 -- przy porzucaniu druzyny
 function removeTeam()
@@ -5315,17 +5196,17 @@ function druzynaPodmien(id, imie)
 		stat.imie = imie
 	end
 end</script>
-				<eventHandlerList />
-			</ScriptGroup>
-			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>gmcp</name>
-				<packageName></packageName>
-				<script>--gmcp</script>
-				<eventHandlerList />
+					<eventHandlerList />
+				</ScriptGroup>
 				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Vitals</name>
+					<name>gmcp</name>
 					<packageName></packageName>
-					<script>--gmcp_Vitals
+					<script>--gmcp</script>
+					<eventHandlerList />
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Vitals</name>
+						<packageName></packageName>
+						<script>--gmcp_Vitals
 function gmcp_Vitals(event)
 	if(gmcp.Char.Vitals == nil) then return end
 	local v = gmcp.Char.Vitals
@@ -5346,19 +5227,19 @@ function gmcp_Vitals(event)
 	end
 	gmcp.Char.Vitals = nil
 end</script>
-					<eventHandlerList>
-						<string>gmcp.Char.Vitals</string>
-					</eventHandlerList>
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Room</name>
-					<packageName></packageName>
-					<script>--gmcp_Room</script>
-					<eventHandlerList />
-					<Script isActive="yes" isFolder="no">
-						<name>gmcp_Room_Glance</name>
+						<eventHandlerList>
+							<string>gmcp.Char.Vitals</string>
+						</eventHandlerList>
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Room</name>
 						<packageName></packageName>
-						<script>--gmcp_Room_Glance
+						<script>--gmcp_Room</script>
+						<eventHandlerList />
+						<Script isActive="yes" isFolder="no">
+							<name>gmcp_Room_Glance</name>
+							<packageName></packageName>
+							<script>--gmcp_Room_Glance
 function gmcp_Room_Glance(event)
 	--display(gmcp.Room)
 	if(gmcp.Room.Glance == nil) then return end
@@ -5369,14 +5250,14 @@ function gmcp_Room_Glance(event)
 	displaySpecialExitsFromMap()
 	gmcp.Room.Glance = nil
 end</script>
-						<eventHandlerList>
-							<string>gmcp.Room.Glance</string>
-						</eventHandlerList>
-					</Script>
-					<Script isActive="yes" isFolder="no">
-						<name>gmcp_Room_Info</name>
-						<packageName></packageName>
-						<script>--gmcp_Room_Info
+							<eventHandlerList>
+								<string>gmcp.Room.Glance</string>
+							</eventHandlerList>
+						</Script>
+						<Script isActive="yes" isFolder="no">
+							<name>gmcp_Room_Info</name>
+							<packageName></packageName>
+							<script>--gmcp_Room_Info
 --move_living
 function gmcp_Room_Info(event)
 	--display(gmcp.Room)
@@ -5395,14 +5276,14 @@ function gmcp_Room_Info(event)
 	raiseEvent("warlock.newRoom", gmcp.Room.Info.id)
 	gmcp.Room.Info = nil
 end</script>
-						<eventHandlerList>
-							<string>gmcp.Room.Info</string>
-						</eventHandlerList>
-					</Script>
-					<Script isActive="yes" isFolder="no">
-						<name>gmcp_Room_Leave</name>
-						<packageName></packageName>
-						<script>-- gmcp_Room_Leave
+							<eventHandlerList>
+								<string>gmcp.Room.Info</string>
+							</eventHandlerList>
+						</Script>
+						<Script isActive="yes" isFolder="no">
+							<name>gmcp_Room_Leave</name>
+							<packageName></packageName>
+							<script>-- gmcp_Room_Leave
 -- Ktos wychodzi z lokacji
 
 function gmcp_Room_Leave()
@@ -5412,15 +5293,15 @@ function gmcp_Room_Leave()
 	hideEnemyStatsFor(id)
 	gmcp.Room.Leave = nil
 end</script>
-						<eventHandlerList>
-							<string>gmcp.Room.Leave</string>
-						</eventHandlerList>
-					</Script>
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Introduced</name>
-					<packageName></packageName>
-					<script>--gmcp_Introduced
+							<eventHandlerList>
+								<string>gmcp.Room.Leave</string>
+							</eventHandlerList>
+						</Script>
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Introduced</name>
+						<packageName></packageName>
+						<script>--gmcp_Introduced
 function gmcp_Introduced(event)
 	--display(gmcp.Introduced)
 	local info = gmcp.Introduced.Info
@@ -5429,19 +5310,19 @@ function gmcp_Introduced(event)
 	ustawOdmiane(co, info.odmiana)
 	druzynaPodmien(info.id, co);
 end</script>
-					<eventHandlerList>
-						<string>gmcp.Introduced</string>
-					</eventHandlerList>
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Team</name>
-					<packageName></packageName>
-					<script>--gmcp_Team</script>
-					<eventHandlerList />
-					<Script isActive="yes" isFolder="no">
-						<name>gmcp_Team_Join</name>
+						<eventHandlerList>
+							<string>gmcp.Introduced</string>
+						</eventHandlerList>
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Team</name>
 						<packageName></packageName>
-						<script>--gmcp_Team_Join
+						<script>--gmcp_Team</script>
+						<eventHandlerList />
+						<Script isActive="yes" isFolder="no">
+							<name>gmcp_Team_Join</name>
+							<packageName></packageName>
+							<script>--gmcp_Team_Join
 --Ktos dołącza do istniejącej drużyny
 function gmcp_Team_Join()
 	local v = gmcp.Team.Join
@@ -5450,14 +5331,14 @@ function gmcp_Team_Join()
 	showStatsFor(v.id, v.nazwa, v.self == 1, false, v.szereg)
 	gmcp.Team.Join = nil
 end</script>
-						<eventHandlerList>
-							<string>gmcp.Team.Join</string>
-						</eventHandlerList>
-					</Script>
-					<Script isActive="yes" isFolder="no">
-						<name>gmcp_Team_Leave</name>
-						<packageName></packageName>
-						<script>--gmcp_Team_Leave
+							<eventHandlerList>
+								<string>gmcp.Team.Join</string>
+							</eventHandlerList>
+						</Script>
+						<Script isActive="yes" isFolder="no">
+							<name>gmcp_Team_Leave</name>
+							<packageName></packageName>
+							<script>--gmcp_Team_Leave
 --Ktoś opuszcza drużynę
 function gmcp_Team_Leave()
 	local v = gmcp.Team.Leave
@@ -5466,14 +5347,14 @@ function gmcp_Team_Leave()
 	hideStatsFor(v.id)
 	gmcp.Team.Leave = nil
 end</script>
-						<eventHandlerList>
-							<string>gmcp.Team.Leave</string>
-						</eventHandlerList>
-					</Script>
-					<Script isActive="yes" isFolder="no">
-						<name>gmcp_Team_Status</name>
-						<packageName></packageName>
-						<script>--gmcp_Team_Status
+							<eventHandlerList>
+								<string>gmcp.Team.Leave</string>
+							</eventHandlerList>
+						</Script>
+						<Script isActive="yes" isFolder="no">
+							<name>gmcp_Team_Status</name>
+							<packageName></packageName>
+							<script>--gmcp_Team_Status
 --Status z pełną lista drużyny.
 function gmcp_Team_Status()
 	local v = gmcp.Team.Status
@@ -5488,15 +5369,15 @@ function gmcp_Team_Status()
 	end
 	gmcp.Team.Status = nil
 end</script>
-						<eventHandlerList>
-							<string>gmcp.Team.Status</string>
-						</eventHandlerList>
-					</Script>
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Attack</name>
-					<packageName></packageName>
-					<script>--gmcp_Attack
+							<eventHandlerList>
+								<string>gmcp.Team.Status</string>
+							</eventHandlerList>
+						</Script>
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Attack</name>
+						<packageName></packageName>
+						<script>--gmcp_Attack
 
 function gmcp_Attack()
 	if(gmcp.Attack == nil) then return end
@@ -5516,14 +5397,14 @@ function gmcp_Attack()
 	gmcp.Attack = nil
 end
 </script>
-					<eventHandlerList>
-						<string>gmcp.Attack</string>
-					</eventHandlerList>
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Kill</name>
-					<packageName></packageName>
-					<script>--gmcp_Kill
+						<eventHandlerList>
+							<string>gmcp.Attack</string>
+						</eventHandlerList>
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Kill</name>
+						<packageName></packageName>
+						<script>--gmcp_Kill
 
 function gmcp_Kill()
 	if(gmcp.Kill == nil) then return end
@@ -5534,14 +5415,14 @@ function gmcp_Kill()
 	raiseEvent("warlock.someoneDied", a.kto.nazwa, a.kogo.nazwa)
 	gmcp.Kill = nil
 end</script>
-					<eventHandlerList>
-						<string>gmcp.Kill</string>
-					</eventHandlerList>
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Init</name>
-					<packageName></packageName>
-					<script>--gmcp_Init
+						<eventHandlerList>
+							<string>gmcp.Kill</string>
+						</eventHandlerList>
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Init</name>
+						<packageName></packageName>
+						<script>--gmcp_Init
 function gmcp_Init()
 	if(gmcp.Gmcp.Init == nil) then return end
 	--display(gmcp.Gmcp.Init)
@@ -5554,14 +5435,14 @@ function gmcp_Init()
 	gmcp.Gmcp.Init = nil
 end
 </script>
-					<eventHandlerList>
-						<string>gmcp.Gmcp.Init</string>
-					</eventHandlerList>
-				</ScriptGroup>
-				<ScriptGroup isActive="yes" isFolder="yes">
-					<name>gmcp_Area_Update</name>
-					<packageName></packageName>
-					<script>-- gmcp_Area_Update
+						<eventHandlerList>
+							<string>gmcp.Gmcp.Init</string>
+						</eventHandlerList>
+					</ScriptGroup>
+					<ScriptGroup isActive="yes" isFolder="yes">
+						<name>gmcp_Area_Update</name>
+						<packageName></packageName>
+						<script>-- gmcp_Area_Update
 function gmcp_Area_Update()
 	if(gmcp.Room.Area.Update == nil) then return end
 	--display(gmcp.Room.Area.Update)
@@ -5584,26 +5465,26 @@ function gmcp_Area_Update()
 	--echo(" * rID: " .. roomId .. ", czas: " .. czas .. " vs zapisany czas: " .. zapisany .. "\n")
 	--gmcp.Room.Area.Update = nil
 end</script>
-					<eventHandlerList>
-						<string>gmcp.Room.Area.Update</string>
-					</eventHandlerList>
-				</ScriptGroup>
-				<Script isActive="no" isFolder="no">
-					<name>gmcp_test_handler</name>
-					<packageName></packageName>
-					<script>function gmcp_test_handler()
+						<eventHandlerList>
+							<string>gmcp.Room.Area.Update</string>
+						</eventHandlerList>
+					</ScriptGroup>
+					<Script isActive="no" isFolder="no">
+						<name>gmcp_test_handler</name>
+						<packageName></packageName>
+						<script>function gmcp_test_handler()
   display('GMCP:')
   display(gmcp)
 end</script>
-					<eventHandlerList>
-						<string>gmcp.External</string>
-					</eventHandlerList>
-				</Script>
-			</ScriptGroup>
-			<ScriptGroup isActive="yes" isFolder="yes">
-				<name>pomoc</name>
-				<packageName></packageName>
-				<script>--Pomoc
+						<eventHandlerList>
+							<string>gmcp.External</string>
+						</eventHandlerList>
+					</Script>
+				</ScriptGroup>
+				<ScriptGroup isActive="yes" isFolder="yes">
+					<name>pomoc</name>
+					<packageName></packageName>
+					<script>--Pomoc
 scriptsVersion = "3.8.0"
 cecho("\n&lt;white&gt;Wpisz /help aby uzyskac pomoc.\n\n")
 
@@ -5683,7 +5564,8 @@ end
 
 registerAnonymousEventHandler("sysDataSendRequest", handleHelpCommands)
 </script>
-				<eventHandlerList />
+					<eventHandlerList />
+				</ScriptGroup>
 			</ScriptGroup>
 		</ScriptGroup>
 	</ScriptPackage>
