@@ -65,7 +65,7 @@ function scripts.windows:createWindows()
 
 	containerBottom = Geyser.Container:new({
 		name = "containerBottom", x = getBorderLeft(), y = -getBorderBottom(),
-		width = "100%", height = getBorderBottom()
+		width = "100%", height = getBorderBottom()*2
 	})
 
 	scripts.windows:createChatWindows(chatWindow);
@@ -98,7 +98,7 @@ end
 function scripts.windows:createSpecialExitsLine(parent)
 	minimapExits = Geyser.MiniConsole:new({
   		name="wyjscia", x = "0", y = "-1c",
-  		width="100%", height = "1c",
+  		width="100%", height = "10c",
 		autoWrap = true,
 		fontSize = getFontSize("main"),
 		font = getFont("main")
