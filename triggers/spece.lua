@@ -2,7 +2,7 @@ scripts["spece"] = scripts["spece"] or {}
 
 function scripts.spece:ustaw_kolor_i_prefiks_atakujacego(prefiks_speca, zmien_kolor)
     if czy_to_ty then
-        if zmien_kolor then setFgColor(230 - (ipoz * 255 / max), 230 - (ipoz * 200 / max), 255) end
+        if zmien_kolor then setFgColor(230 - (ipoz * 230 / max), 230 - (ipoz * 200 / max), 255) end
         prefix("<deep_sky_blue>["..prefiks_speca.."] ", cecho)
     else
         if zmien_kolor then setFgColor(255, 255 - (ipoz * 255 / max), 200 - (ipoz * 200 / max)) end
@@ -64,10 +64,10 @@ function trigger_szermierze_spec_obrazenia_func(cios)
         scripts.spece:ustaw_kolor_i_prefiks_atakujacego("SZ 0/8", false)
 	elseif cios == "nieznaczny uszczerbek" or cios == "niewielki uszczerbek" or cios == "zauwazalny uszczerbek" or cios == "spory uszczerbek" or cios == "gleboka dziure" or cios == "paskudny uszczerbek" or cios == "prawie smiertelny w skutkach brak" or cios == "zmasakrowane szczatki" then	
 	    ipoz, max = scripts.opisy_poziomow:jakiPoziomOpisu(scripts.opisy_poziomow.szermierz_sila_speca_zywiolaki, cios:lower())
-        scripts.spece:ustaw_kolor_i_prefiks_atakujacego("SZ "..ipoz.."/"..max-1, true)
+        scripts.spece:ustaw_kolor_i_prefiks_atakujacego("SZ "..ipoz.."/"..max, true)
     else
         ipoz, max = scripts.opisy_poziomow:jakiPoziomOpisu(scripts.opisy_poziomow.szermierz_sila_speca, cios:lower())
-        scripts.spece:ustaw_kolor_i_prefiks_atakujacego("SZ "..ipoz.."/"..max-1, true)
+        scripts.spece:ustaw_kolor_i_prefiks_atakujacego("SZ "..ipoz.."/"..max, true)
     end
 	
     resetFormat()
@@ -117,7 +117,7 @@ function spec_druid_wilk_func()
 
 	prefix("<deep_sky_blue>[WILK "..sila_speca[matches[4]].."/5] ", cecho)
 	selectCaptureGroup(4)
-	setFgColor(230 - (sila_speca[matches[4]] * 255 / 6), 230 - (sila_speca[matches[4]] * 200 / 6), 255)
+	setFgColor(230 - (sila_speca[matches[4]] * 230 / 5), 230 - (sila_speca[matches[4]] * 200 / 5), 255)
 	resetFormat()
 end
 
@@ -133,7 +133,7 @@ function spec_druid_pantera_func()
 
 	prefix("<deep_sky_blue>[PANT "..sila_speca[matches[4]].."/5] ", cecho)
 	selectCaptureGroup(4)
-	setFgColor(230 - (sila_speca[matches[4]] * 255 / 6), 230 - (sila_speca[matches[4]] * 200 / 6), 255)
+	setFgColor(230 - (sila_speca[matches[4]] * 230 / 5), 230 - (sila_speca[matches[4]] * 200 / 5), 255)
 	resetFormat()
 end
 
@@ -149,6 +149,6 @@ function spec_druid_niedzwiedz_func()
 
 	prefix("<deep_sky_blue>[MIS "..sila_speca[matches[4]].."/5] ", cecho)
 	selectCaptureGroup(4)
-	setFgColor(230 - (sila_speca[matches[4]] * 255 / 6), 230 - (sila_speca[matches[4]] * 200 / 6), 255)
+	setFgColor(230 - (sila_speca[matches[4]] * 230 / 5), 230 - (sila_speca[matches[4]] * 200 / 5), 255)
 	resetFormat()
 end

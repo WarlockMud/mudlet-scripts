@@ -8,7 +8,8 @@ function zabij_po_symbolu()
 		if tostring(v.symbol) == matches[2] then
 			if v.avatar == 1 or v.team == 1 then
 				scripts:print_log("<light_steel_blue>Chyba nie chcesz zaatakowac takiego slabeusza?")
-			elseif (v.player == 1 or v.mercenary == 1) and player_killer == 0 then
+			elseif (v.player == 1 or v.entity_type == "mercenary" or v.entity_type == "servant" or v.entity_type == "horse")
+			and player_killer == 0 then
 				scripts:print_log("<i><grey>No, no, tyle agresji.</i>")
 				scripts:print_log("<light_steel_blue>PK jest obecnie wylaczone.")
 			else

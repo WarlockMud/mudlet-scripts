@@ -72,7 +72,7 @@ function scripts.counter:print_killed()
         end
         all_sum = all_sum + summed
         cecho("|                                               |\n")
-        cecho("| <light_slate_blue>LACZNIE<grey>: ....................... " .. string.sub(summed .. "            ", 0, 12) .. " |\n")
+        cecho("| <light_slate_blue>LACZNIE<grey>: ....................... " .. string.sub(summed .. " (" .. roundToDecimal(summed/scripts.counter.all_kills*100,2) .. "%)            ", 0, 12) .. " |\n")
     end
 
     cecho("|                                               |\n")
@@ -92,7 +92,7 @@ function scripts.counter:print_killed()
                 summed = summed + j
             end
             cecho("|                                               |\n")
-            cecho("| <light_slate_blue>LACZNIE<grey>: ....................... " .. string.sub(summed .. "            ", 0, 12) .. " |\n")
+			cecho("| <light_slate_blue>LACZNIE<grey>: ....................... " .. string.sub(summed .. " (" .. roundToDecimal(summed/scripts.counter.all_kills*100,2) .. "%)            ", 0, 12) .. " |\n")
             cecho("|                                               |\n")
             all_sum = all_sum + summed
         end
@@ -134,4 +134,46 @@ end
 function alias_reset_zabici_func()
     scripts.counter:reset()
     scripts.zabici.kille = {}
+end
+
+function alias_stats_def()
+
+	stats = stats or {}
+	stats.defensywne = stats.defensywne or {}
+	stats.defensywne.miss = stats.defensywne.miss or 0
+	stats.defensywne.uniki = stats.defensywne.uniki or 0
+	stats.defensywne.parowanie = stats.defensywne.parowanie or 0
+	stats.defensywne.tarcza = stats.defensywne.tarcza or 0
+	stats.defensywne.zbroja = stats.defensywne.zbroja or 0
+	stats.defensywne.hit = stats.defensywne.hit or 0
+
+	local total = stats.defensywne.miss + stats.defensywne.uniki + stats.defensywne.parowanie + stats.defensywne.tarcza + stats.defensywne.zbroja + stats.defensywne.hit
+	if total <1 then total = 1 end
+
+	local display_miss = roundToDecimal(stats.defensywne.miss/total*100,0)
+	local display_uniki = roundToDecimal(stats.defensywne.uniki/total*100,0)
+	local display_parowanie = roundToDecimal(stats.defensywne.parowanie/total*100,0)
+	local display_tarcza = roundToDecimal(stats.defensywne.tarcza/total*100,0)
+	local display_zbroja = roundToDecimal(stats.defensywne.zbroja/total*100,0)
+	local display_hit = roundToDecimal(stats.defensywne.hit/total*100,0)
+
+	cecho("<grey>----------------------\n")
+	cecho("<light_sea_green>   STATY DEFENSYWNE\n")
+	cecho("<grey>----------------------\n")
+	cecho(string.format("<light_sea_green>%-5s <grey>%16s\n", "Data:", os.date("%Y.%m.%d")))
+	cecho(string.format("<light_sea_green>%-5s <grey>%16s\n", "Imie:", string.upper(gmcp.Char.Info.name)))
+	cecho("<grey>----------------------\n")
+	cecho(string.format("<light_sea_green>%-10s <grey>%5s (%2s%%)\n", "Chybione:", stats.defensywne.miss, display_miss))
+	cecho(string.format("<light_sea_green>%-10s <grey>%5s (%2s%%)\n", "Uniki:", stats.defensywne.uniki, display_uniki))
+	cecho(string.format("<light_sea_green>%-10s <grey>%5s (%2s%%)\n", "Parowanie:", stats.defensywne.parowanie, display_parowanie))
+	cecho(string.format("<light_sea_green>%-10s <grey>%5s (%2s%%)\n", "Tarcza:", stats.defensywne.tarcza, display_tarcza))
+	cecho(string.format("<light_sea_green>%-10s <grey>%5s (%2s%%)\n", "Zbroja:", stats.defensywne.zbroja, display_zbroja))
+	cecho(string.format("<light_sea_green>%-10s <grey>%5s (%2s%%)\n", "Trafienia:", stats.defensywne.hit, display_hit))
+	cecho("<grey>----------------------\n")
+
+end
+
+function roundToDecimal(number, decimalPlaces)
+  local multiplier = 10 ^ decimalPlaces
+  return math.floor(number * multiplier + 0.5) / multiplier
 end

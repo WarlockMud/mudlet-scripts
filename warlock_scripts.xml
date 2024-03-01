@@ -513,8 +513,12 @@
 						<string>nie udaje sie trafic</string>
 						<string>udaje sie uniknac</string>
 						<string>wyparowany</string>
+						<string>zblokowac</string>
+						<string>zadnej krzywdy</string>
 					</regexCodeList>
 					<regexCodePropertyList>
+						<integer>0</integer>
+						<integer>0</integer>
 						<integer>0</integer>
 						<integer>0</integer>
 						<integer>0</integer>
@@ -640,8 +644,10 @@
 						<colorTriggerBgColor>#000000</colorTriggerBgColor>
 						<regexCodeList>
 							<string>paruje</string>
+							<string>zblokowac</string>
 						</regexCodeList>
 						<regexCodePropertyList>
+							<integer>0</integer>
 							<integer>0</integer>
 						</regexCodePropertyList>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -659,8 +665,10 @@
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
 								<string>(.+) wyprowadza (uderzenie|ciecie|pchniecie) (.+), lecz (szczesliwie|niemrawo|z trudem|z wysilkiem|z mozolem|pewnie|zgrabnie|umiejetnie|wprawnie|zrecznie|zwinnie|szybko|perfekcyjnie) (parujesz) je (.+).$</string>
+								<string>(.+) wyprowadza (cios) (.+), (lecz) (udaje ci sie go zblokowac).$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
+								<integer>1</integer>
 								<integer>1</integer>
 							</regexCodePropertyList>
 						</Trigger>
@@ -781,8 +789,10 @@
 						<regexCodeList>
 							<string>zatrzymuje</string>
 							<string>wyparowany</string>
+							<string>zadnej krzywdy</string>
 						</regexCodeList>
 						<regexCodePropertyList>
+							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
 						</regexCodePropertyList>
@@ -801,8 +811,10 @@
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
 								<string>(.+) (uderza|tnie|kluje) cie (.+) w (.+), lecz (jego|jej) (bron|cios) ((przebijajac|zesliznawszy sie) .+ |)(zatrzymuje sie) na twojej (.+).</string>
+								<string>(.+) (uderza|tnie|kluje) cie (.+) w (.+) (nie wyrzadzajac ci zadnej krzywdy).</string>
 							</regexCodeList>
 							<regexCodePropertyList>
+								<integer>1</integer>
 								<integer>1</integer>
 							</regexCodePropertyList>
 						</Trigger>
@@ -881,7 +893,7 @@
 						<colorTriggerFgColor>#000000</colorTriggerFgColor>
 						<colorTriggerBgColor>#000000</colorTriggerBgColor>
 						<regexCodeList>
-							<string>(.+) nie udaje sie trafic</string>
+							<string>(.+) nie udaje sie trafic (ciebie|.+?) (.+?).$</string>
 						</regexCodeList>
 						<regexCodePropertyList>
 							<integer>1</integer>
@@ -965,7 +977,7 @@
 						<colorTriggerFgColor>#000000</colorTriggerFgColor>
 						<colorTriggerBgColor>#000000</colorTriggerBgColor>
 						<regexCodeList>
-							<string>(.+?) (ledwo muska|lekko rani|rani|powaznie rani|bardzo ciezko rani|potwornie rani|masakruje) (.+), trafiajac (cie|go|ja|je) w (.+).</string>
+							<string>(.+?) (ledwo muska|lekko rani|rani|powaznie rani|bardzo ciezko rani|potwornie rani|masakruje) (cie|.+) (.+?), trafiajac (cie|go|ja|je) w (.+).</string>
 						</regexCodeList>
 						<regexCodePropertyList>
 							<integer>1</integer>
@@ -2194,8 +2206,10 @@
 						<string>plecak zawiera(.+)</string>
 						<string>sakwa zawiera(.+)</string>
 						<string>torba zawiera(.+)</string>
+						<string>szkatulka zawiera(.+)</string>
 					</regexCodeList>
 					<regexCodePropertyList>
+						<integer>1</integer>
 						<integer>1</integer>
 						<integer>1</integer>
 						<integer>1</integer>
@@ -4493,22 +4507,7 @@ replaceLine(("[WIR 5/5] =====&gt; " ..matches[2]))</script>
 			</TriggerGroup>
 		</TriggerGroup>
 	</TriggerPackage>
-	<TimerPackage>
-		<TimerGroup isActive="yes" isFolder="yes" isTempTimer="no" isOffsetTimer="no">
-			<name>warlock</name>
-			<script></script>
-			<command></command>
-			<packageName></packageName>
-			<time>00:00:00.000</time>
-			<Timer isActive="yes" isFolder="no" isTempTimer="no" isOffsetTimer="no">
-				<name>anti_idle_timer</name>
-				<script>sendGMCP("Core.Ping {}")</script>
-				<command></command>
-				<packageName></packageName>
-				<time>00:04:00.000</time>
-			</Timer>
-		</TimerGroup>
-	</TimerPackage>
+	<TimerPackage />
 	<AliasPackage>
 		<AliasGroup isActive="yes" isFolder="yes">
 			<name>warlock</name>
@@ -4633,6 +4632,13 @@ replaceLine(("[WIR 5/5] =====&gt; " ..matches[2]))</script>
 					<command></command>
 					<packageName></packageName>
 					<regex>^/odznaczaj$</regex>
+				</Alias>
+				<Alias isActive="yes" isFolder="no">
+					<name>stats def</name>
+					<script>alias_stats_def()</script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^/stats def$</regex>
 				</Alias>
 			</AliasGroup>
 			<AliasGroup isActive="yes" isFolder="yes">

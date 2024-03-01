@@ -1,4 +1,13 @@
 scripts["licznik_cech"] = scripts["licznik_cech"] or {}
+
+cecha_to_stat = {
+  [1] = 50, [2] = 70, [3] = 89, [4] = 107, [5] = 124, [6] = 140, [7] = 155, [8] = 169, [9] = 182, [10] = 194,
+  [11] = 205, [12] = 215, [13] = 224, [14] = 232, [15] = 239, [16] = 245, [17] = 250, [18] = 255, [19] = 260, [20] = 265,
+  [21] = 270, [22] = 275, [23] = 280, [24] = 285, [25] = 290, [26] = 295, [27] = 300, [28] = 305, [29] = 310, [30] = 315,
+  [31] = 320, [32] = 325, [33] = 330, [34] = 335, [35] = 340, [36] = 345, [37] = 350, [38] = 355, [39] = 360, [40] = 365,
+  [41] = 370, [42] = 375, [43] = 380, [44] = 385, [45] = 390, [46] = 395, [47] = 400, [48] = 405, [49] = 410, [50] = 415,
+  [51] = 420, [52] = 425
+}
     
 -- CECHY SILA
 scripts.licznik_cech.silaall = {}
@@ -192,17 +201,20 @@ function trigger_licznik_cech_cechy_func()
 end
 
 function scripts.licznik_cech:cechy_policz_lvl(sila,zrecznosc,wytrzymalosc,inteligencja,madrosc,odwaga)
+
   local level = sila+zrecznosc+wytrzymalosc+inteligencja+madrosc+odwaga
   local bojowe = sila+zrecznosc+wytrzymalosc
   local mentalne = inteligencja+madrosc
-  local procentbojowych = bojowe/level*100
-  local procentmentalnych = mentalne/level*100
-  cecho("\n<dark_goldenrod>Masz "..level.."/312 cech. Bojowe: "..bojowe.." ("..math.floor(procentbojowych).."%), mentalne: "..mentalne.." ("..math.floor(procentmentalnych).."%).")
+  local procentbojowych = roundToDecimal(bojowe/level*100,1)
+  local procentmentalnych = roundToDecimal(mentalne/level*100,1)
+  local avg_stats = roundToDecimal((cecha_to_stat[sila]+cecha_to_stat[zrecznosc]+cecha_to_stat[wytrzymalosc]+cecha_to_stat[inteligencja]+cecha_to_stat[madrosc]+cecha_to_stat[odwaga])/6,1)
+  cecho("\n<goldenrod>Masz "..level.."/312 cech. Srednia stats: "..avg_stats..". Bojowe: "..bojowe.." ("..procentbojowych.."%). Mentalne: "..mentalne.." ("..procentmentalnych.."%).")
   scripts.licznik_cech:resetuj_cechy()
 end
 
 function scripts.licznik_cech:wyswietl_ceche(cecha, wyrownanie)
-  cecho("<gold>["..cecha.."]"..wyrownanie.."<lemon_chiffon> Jestes "..matches[2]..matches[3].."<light_grey>"..matches[4]..matches[5]..".")
+	local stat = cecha_to_stat[cecha]
+  cecho("<gold>["..cecha.."]"..wyrownanie.."<lemon_chiffon> Jestes "..matches[2]..matches[3].."<light_grey>"..matches[4]..matches[5]..". [<gold>"..stat.."<grey>]")
 end
 
 function scripts.licznik_cech:resetuj_cechy()
