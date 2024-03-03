@@ -104,8 +104,7 @@ scripts.opisy_poziomow["szermierz_sila_speca"] = {
 		"gleboka rane",
 		"paskudna rane",
 		"prawie smiertelna rane, tnac miesnie i pryskajac krwia",
-		"przedziurawione na wylot cialo, ktore pada na ziemie",
-		""
+		"przedziurawione na wylot cialo, ktore pada na ziemie"
 	}
 	
 scripts.opisy_poziomow["szermierz_sila_speca_zywiolaki"] = {
@@ -116,8 +115,7 @@ scripts.opisy_poziomow["szermierz_sila_speca_zywiolaki"] = {
 		"gleboka dziure",
 		"paskudny uszczerbek",
 		"prawie smiertelny w skutkach brak",
-		"zmasakrowane szczatki",
-		""
+		"zmasakrowane szczatki"
 	}
 	
 scripts.opisy_poziomow["szeregi"] = {["pierwszym"] = 1, ["drugim"] = 2, ["trzecim"] = 3}

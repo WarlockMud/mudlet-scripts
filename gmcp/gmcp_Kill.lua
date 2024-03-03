@@ -1,6 +1,9 @@
 function gmcp_Kill()
 	if(gmcp.Kill == nil) then return end
-	local a = gmcp.Kill		
+	local a = gmcp.Kill
+	if a.kto.id == scripts.character_id then
+		a.kto.nazwa = scripts.character_name -- hack dla druidow w przemianie
+	end
 	scripts.zabici:dodajZabitego(a.kto.nazwa, a.kogo.nazwa)
 	scripts.counter:add_killed(a.kogo.rasa,string.lower(a.kto.nazwa))
 	if scripts.character_name == string.lower(a.kto.nazwa) then

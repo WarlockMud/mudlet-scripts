@@ -30,8 +30,12 @@ function trigger_uniki_moje_func()
     fg("white")
     
     selectString("unikasz", 1)
-    fg("green")
+    fg("PaleGreen")
     
+	stats = stats or {}
+	stats.defensywne = stats.defensywne or {}
+	stats.defensywne.uniki = (stats.defensywne.uniki or 0) + 1
+
     deselect()
     resetFormat()    
 end
@@ -43,6 +47,10 @@ function trigger_uniki_moje_ani_func()
     selectString("uniknac", 1)
     fg("PaleGreen")
     
+	stats = stats or {}
+	stats.defensywne = stats.defensywne or {}
+	stats.defensywne.uniki = (stats.defensywne.uniki or 0) + 1
+	
     deselect()
     resetFormat()    
 end
@@ -86,6 +94,10 @@ function trigger_parowania_moje_func()
     selectCaptureGroup(6)
     fg("green")
     
+	stats = stats or {}
+	stats.defensywne = stats.defensywne or {}
+	stats.defensywne.parowanie = (stats.defensywne.parowanie or 0) + 1
+	
     resetFormat()
 end
 
@@ -112,7 +124,12 @@ function trigger_tarcza_moja_func()
     selectCaptureGroup(5)
     fg("green")
     selectCaptureGroup(6)
-    fg("white")    
+    fg("white")
+	
+	stats = stats or {}
+	stats.defensywne = stats.defensywne or {}
+	stats.defensywne.tarcza = (stats.defensywne.tarcza or 0) + 1
+	
     resetFormat()    
 end
 
@@ -151,15 +168,27 @@ function trigger_zbroja_moja_func()
     local czym = matches[4]
     local zbroja = matches[11]
     
-    selectCaptureGroup(2)
-    fg("white")
-    selectCaptureGroup(8)
-    fg("powder_blue")
-    selectCaptureGroup(10)
-    fg("green")
-    selectCaptureGroup(11)
-    fg("white")
+	if matches[6] == "nie wyrzadzajac ci zadnej krzywdy"
+	then
+		selectCaptureGroup(2)
+		fg("white")
+		selectCaptureGroup(6)
+		fg("steel_blue")
+	else	
+		selectCaptureGroup(2)
+		fg("white")
+		selectCaptureGroup(8)
+		fg("powder_blue")
+		selectCaptureGroup(10)
+		fg("steel_blue")
+		selectCaptureGroup(11)
+		fg("white")
+	end
     
+	stats = stats or {}
+	stats.defensywne = stats.defensywne or {}
+	stats.defensywne.zbroja = (stats.defensywne.zbroja or 0) + 1
+	
     resetFormat()    
 end
 
@@ -181,18 +210,34 @@ function trigger_zbroja_moja_ani_func()
     selectCaptureGroup(3)
     fg("powder_blue")
     selectCaptureGroup(5)
-    fg("green")
+    fg("steel_blue")
     selectCaptureGroup(6)
     fg("white")
+	
+	stats = stats or {}
+	stats.defensywne = stats.defensywne or {}
+	stats.defensywne.zbroja = (stats.defensywne.zbroja or 0) + 1
     
     resetFormat()    
 end
 
 function trigger_pudlo_func()
-    selectCaptureGroup(2)
-    fg("white")
-    selectString("nie udaje sie trafic", 1)
-    fg("PaleGreen")
+
+	if matches[3] == "ciebie" then
+		selectCaptureGroup(2)
+		fg("white")
+		selectString("nie udaje sie trafic", 1)
+		fg("PaleGreen")
+		
+		stats = stats or {}
+		stats.defensywne = stats.defensywne or {}
+		stats.defensywne.miss = (stats.defensywne.miss or 0) + 1
+	else
+		selectCaptureGroup(2)
+		fg("white")
+		selectString("nie udaje sie trafic", 1)
+		fg("gold")
+	end
 
     resetFormat()
 end
@@ -231,6 +276,14 @@ function trigger_ciosy_hum_func()
         selectString(rana, 1)
         setFgColor(255, 255 - (ipoz * 255 / max), 200 - (ipoz * 200 / max));
     end
+	
+    if(kogo == " cie") then
+		stats = stats or {}
+		stats.defensywne = stats.defensywne or {}
+		stats.defensywne.hit = (stats.defensywne.hit or 0) + 1
+		stats.defensywne.rany = stats.defensywne.rany or {}
+		stats.defensywne.rany[rana] = (stats.defensywne.rany[rana] or 0) + 1
+	end
 
     deselect()
     resetFormat()    
@@ -258,20 +311,34 @@ function trigger_ciosy_moje_func()
     ipoz, max = scripts.opisy_poziomow:jakiPoziomOpisu(scripts.opisy_poziomow.opisy_rany, rana)
     if(ipoz) then
         selectCaptureGroup(3)
-        setFgColor(230 - (ipoz * 255 / max), 230 - (ipoz * 200 / max), 255);
+        setFgColor(230 - (ipoz * 230 / max), 230 - (ipoz * 200 / max), 255);
     end
+	
+	prefix("<slate_grey>[CIOS "..ipoz.."/"..max.."] ", cecho)
 
     deselect()
     resetFormat()    
 end
 
 function trigger_ciosy_ani_func()
+
+	selectCaptureGroup(2)
+	fg("white")
+	
     local rana = matches[3]
     ipoz, max = scripts.opisy_poziomow:jakiPoziomOpisu(scripts.opisy_poziomow.opisy_rany, rana)
     if(ipoz) then
         selectString(rana, 1)
         setFgColor(255, 255 - (ipoz * 255 / max), 200 - (ipoz * 200 / max));
     end
+
+    if(matches[4] == "cie") then
+		stats = stats or {}
+		stats.defensywne = stats.defensywne or {}
+		stats.defensywne.hit = (stats.defensywne.hit or 0) + 1
+		stats.defensywne.rany = stats.defensywne.rany or {}
+		stats.defensywne.rany[rana] = (stats.defensywne.rany[rana] or 0) + 1
+	end
 
     deselect()
     resetFormat()    
