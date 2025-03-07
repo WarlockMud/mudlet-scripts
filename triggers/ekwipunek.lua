@@ -18,7 +18,7 @@ function ocena_broni_func()
 
 	local skutecznoscMap
 
-	if matches[3] == "on" then
+	if matches[2] == "on" then
 		skutecznoscMap = {
 			["kompletnie nieskuteczny"] = 1,
 			["strasznie nieskuteczny"] = 2,
@@ -56,7 +56,7 @@ function ocena_broni_func()
 
 	local wywazenieMap
 
-	if matches[3] == "on" then
+	if matches[2] == "on" then
 		wywazenieMap = {
 			["wyjatkowo zle wywazony"] = 1,
 			["bardzo zle wywazony"] = 2,
@@ -91,7 +91,22 @@ function ocena_broni_func()
 			["genialnie wywazona"] = 14
 		}
 	end
-
+	local krytyMap = {
+		["wyjatkowo zle"] = 1,
+		["bardzo zle"] = 2,
+		["zle"] = 3,
+		["bardzo kiepsko"] = 4,
+		["kiepsko"] = 5,
+		["przyzwoicie"] = 6,
+		["srednio"] = 7,
+		["niezle"] = 8,
+		["dosc dobrze"] = 9,
+		["dobrze"] = 10,
+		["bardzo dobrze"] = 11,
+		["doskonale"] = 12, 
+		["perfekcyjnie"] = 13,
+		["genialnie"] = 14		
+	}
 	local parowanieMap = {
 		["wyjatkowo zle"] = 1,
 		["bardzo zle"] = 2,
@@ -109,20 +124,22 @@ function ocena_broni_func()
 		["genialnie"] = 14
 	}
 
-	local typ = matches[2]
-	local wywazenie = matches[4].." ["..wywazenieMap[matches[4]].."/14]"
-	local skutecznosc = matches[5].." ["..skutecznoscMap[matches[5]].."/14]"
-	local parowanie = matches[6].." ["..parowanieMap[matches[6]].."/14]"
+	--local typ = matches[2]
+	local wywazenie = matches[3].." ["..wywazenieMap[matches[3]].."/14]"
+	local skutecznosc = matches[4].." ["..skutecznoscMap[matches[4]].."/14]"
+	local parowanie = matches[5].." ["..parowanieMap[matches[5]].."/14]"
 	local szybkosc = matches[8].." ["..szybkoscMap[matches[8]].."/7]"
-	local suma = wywazenieMap[matches[4]] + skutecznoscMap[matches[5]]
+	local kryty = matches[6] .. " [" .. krytyMap[matches[6]] .. "/14]"
+	local suma = wywazenieMap[matches[3]] + skutecznoscMap[matches[4]]
 
 	deleteLine()
-	cecho("<light_slate_blue>\n\n".. string.sub("Typ broni: <grey>" .. typ .. "                                 ", 0, 50))
-	cecho("<light_slate_blue>".. string.sub("Suma: <grey>" .. suma .. "                                 ", 0, 50))
+	--cecho("<light_slate_blue>\n\n".. string.sub("Typ broni: <grey>" .. typ .. "                                 ", 0, 50))	
 	cecho("<light_slate_blue>\n".. string.sub("Wywazenie: <grey>" .. wywazenie .. "                                 ", 0, 50))
 	cecho("<light_slate_blue>".. string.sub("Skutecznosc: <grey>" .. skutecznosc .. "                                 ", 0, 50))
 	cecho("<light_slate_blue>\n"    .. string.sub("Parowanie: <grey>" .. parowanie .. "                                 ", 0, 50))
 	cecho("<light_slate_blue>".. string.sub("Szybkosc: <grey>" .. szybkosc .. "                                 ", 0, 50))
+	cecho("<light_slate_blue>\n".. string.sub("Obrazenia krytyczne: <grey>" .. kryty .. "                                 ", 0, 50))
+	cecho("<light_slate_blue>\n".. string.sub("Suma: <grey>" .. suma .. "                                 ", 0, 50))
 
 end
 

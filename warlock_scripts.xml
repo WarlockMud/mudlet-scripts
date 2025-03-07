@@ -2125,7 +2125,7 @@
 				<colorTriggerBgColor>#000000</colorTriggerBgColor>
 				<regexCodeList />
 				<regexCodePropertyList />
-				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="yes" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 					<name>ocena_broni</name>
 					<script>ocena_broni_func()</script>
 					<triggerType>0</triggerType>
@@ -2139,7 +2139,7 @@
 					<colorTriggerFgColor>#000000</colorTriggerFgColor>
 					<colorTriggerBgColor>#000000</colorTriggerBgColor>
 					<regexCodeList>
-						<string>Jak na (.*) jest (on|ona) (.*) i (.*), dodatkowo (.*) nadaje sie do parowania ciosow i wydaje ci sie ze mozna (nim|nia) (.*) wyprowadzac ataki.</string>
+						<string>^Jest (on|ona) (.*) i (.*), dodatkowo (.*) nadaje sie do parowania ciosow, a jej konstrukcja sprawia, ze (.*) nadaje sie do zadawania trafien krytycznych i wydaje ci sie ze mozna (nim|nia) (.*) wyprowadzac ataki.</string>
 					</regexCodeList>
 					<regexCodePropertyList>
 						<integer>1</integer>
