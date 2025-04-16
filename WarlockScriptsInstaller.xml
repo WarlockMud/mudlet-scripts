@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.000">
+	<ScriptPackage>
+		<Script isActive="yes" isFolder="no">
+			<name>WarlockScriptsInstaller</name>
+			<packageName></packageName>
+			<script>local installer = {}
+
+function lfs.isdir(dir)
+    local current = lfs.currentdir()
+    local exists = lfs.chdir(dir)
+    lfs.chdir(current)
+    return exists
+end
+
+local latest_release = "https://api.github.com/repos/WarlockMud/mudlet-scripts/releases/latest"
+local download_base_url = "https://codeload.github.com/WarlockMud/mudlet-scripts/zip/"
+
+local latest_file = getMudletHomeDir() .. "/latest.json"
+local scriptsZip = getMudletHomeDir() .. "/warlock_scripts.zip"
+local installerXML = getMudletHomeDir() .. "/WarlockScriptsInstaller.xml"
+local unzipDirectory = ""
+local scriptsDirectory = getMudletHomeDir() .. "/warlock_scripts/"
+local unzippedDirectoryName = "mudlet-scripts-"
+
+if lfs.isdir(scriptsDirectory .. ".git/") then
+    cecho("\n&lt;CadetBlue&gt;(skrypty)&lt;tomato&gt;: Katalog " .. scriptsDirectory .. " to repozytorium .git\n")
+    cecho("&lt;CadetBlue&gt;(skrypty)&lt;tomato&gt;: Chyba nie chcesz nadpisac repozytorium w ten sposob? :)\n")
+    return
+end
+
+function installScripts()
+    downloadFile(latest_file, latest_release)
+    registerAnonymousEventHandler("sysDownloadDone", "handleVersionDownload", true)
+    registerAnonymousEventHandler("sysDownloadError", "handleDownloadErrors", true)
+end
+
+
+function handleVersionDownload(_, filename, callback)
+    if filename ~= latest_file then
+        return true
+    end
+
+    local file = io.open(latest_file, "rb")
+    if file then
+        local response = yajl.to_value(file:read("*a"))
+        file:close()
+        os.remove(latest_file)
+        unzipDirectory = getMudletHomeDir() .. "/warlock_scripts"
+        tempTimer(0.1, function() downloadScripts(response.tag_name) end)        
+    end
+end
+
+function handleDownloadErrors(_, errorFound)
+   cecho("\n&lt;CadetBlue&gt;(skrypty)&lt;tomato&gt;: Blad podczas pobieranie skryptow: ".. errorFound ..")\n")
+   uninstallPackage(installer.name)
+end
+
+function downloadScripts(tag_name)
+    pcall(deleteDir, scriptsDirectory)
+    registerAnonymousEventHandler("sysDownloadDone", "handleDownload", true)
+    registerAnonymousEventHandler("sysDownloadError", "handleDownloadErrors", true)    
+    unzippedDirectoryName = unzippedDirectoryName .. tag_name
+    downloadFile(scriptsZip, download_base_url .. tag_name)
+    cecho("\n&lt;CadetBlue&gt;(skrypty)&lt;tomato&gt;: Pobieram aktualna paczke skryptow (".. tag_name ..")\n")
+end
+
+function handleDownload(_, filename)
+    if filename ~= scriptsZip then
+        return true
+    end
+
+    registerAnonymousEventHandler("sysUnzipDone", "handleUnzipEvents", true)
+    registerAnonymousEventHandler("sysUnzipError", "handleUnzipEvents", true)
+    unzipAsync(scriptsZip, getMudletHomeDir())
+end
+
+function handleUnzipEvents(event, ...)
+    if event == "sysUnzipDone" then
+        local args = {...}
+        local zipName = args[1]
+        local unzipLocation = args[2]        
+
+        os.remove(scriptsZip)
+        os.remove(installerXML)
+        disableScript("WarlockScriptsInstaller")
+        uninstallPackage("warlock")
+        uninstallPackage("Warlock")
+        uninstallPackage("generic_mapper")                
+        tempTimer(2, function()
+            os.rename(getMudletHomeDir() .. "/" .. unzippedDirectoryName, scriptsDirectory)
+            installPackage(scriptsDirectory .. "warlock_scripts.xml")
+            tempTimer(2, function()
+                if not saveProfile() then
+                    tempTimer(5, function() saveProfile() end)
+                end
+                cecho("\n&lt;CadetBlue&gt;(skrypty)&lt;tomato&gt;: Skrypty zainstalowane\n")
+            end)
+        end)
+    elseif event == "sysUnzipError" then
+        cecho("\n&lt;CadetBlue&gt;(skrypty)&lt;tomato&gt;: Blad podczas rozpakowywania skryptow\n")
+    end
+end
+
+function deleteDir(dir)
+    for file in lfs.dir(dir) do
+        local file_path = dir .. '/' .. file
+        if file ~= "." and file ~= ".." then
+            if lfs.attributes(file_path, 'mode') == 'file' then
+                os.remove(file_path)
+            elseif lfs.attributes(file_path, 'mode') == 'directory' then
+                deleteDir(file_path)
+            end
+        end
+    end
+    lfs.rmdir(dir)
+end
+
+function WarlockScriptsInstaller(_, name)
+  installer.name = name
+  installScripts()
+  clearCmdLine()
+end
+</script>
+			<eventHandlerList>
+				<string>sysInstallPackage</string>
+			</eventHandlerList>
+		</Script>
+	</ScriptPackage>
+</MudletPackage>
