@@ -4992,64 +4992,64 @@ cecho("\n +------------------------+ \n")</script>
 				<Key isActive="yes" isFolder="no">
 					<name>north</name>
 					<packageName></packageName>
-					<script></script>
-					<command>n</command>
+					<script>scripts.dir_binds.send_mapped_direction("north")</script>
+					<command></command>
 					<keyCode>56</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>
 				<Key isActive="yes" isFolder="no">
 					<name>south</name>
 					<packageName></packageName>
-					<script></script>
-					<command>s</command>
+					<script>scripts.dir_binds.send_mapped_direction("south")</script>
+					<command></command>
 					<keyCode>50</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>
 				<Key isActive="yes" isFolder="no">
 					<name>east</name>
 					<packageName></packageName>
-					<script></script>
-					<command>e</command>
+					<script>scripts.dir_binds.send_mapped_direction("east")</script>
+					<command></command>
 					<keyCode>54</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>
 				<Key isActive="yes" isFolder="no">
 					<name>west</name>
 					<packageName></packageName>
-					<script></script>
-					<command>w</command>
+					<script>scripts.dir_binds.send_mapped_direction("west")</script>
+					<command></command>
 					<keyCode>52</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>
 				<Key isActive="yes" isFolder="no">
 					<name>nw</name>
 					<packageName></packageName>
-					<script></script>
-					<command>nw</command>
+					<script>scripts.dir_binds.send_mapped_direction("northwest")</script>
+					<command></command>
 					<keyCode>55</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>
 				<Key isActive="yes" isFolder="no">
 					<name>ne</name>
 					<packageName></packageName>
-					<script></script>
-					<command>ne</command>
+					<script>scripts.dir_binds.send_mapped_direction("northeast")</script>
+					<command></command>
 					<keyCode>57</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>
 				<Key isActive="yes" isFolder="no">
 					<name>sw</name>
 					<packageName></packageName>
-					<script></script>
-					<command>sw</command>
+					<script>scripts.dir_binds.send_mapped_direction("southwest")</script>
+					<command></command>
 					<keyCode>49</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>
 				<Key isActive="yes" isFolder="no">
 					<name>se</name>
 					<packageName></packageName>
-					<script></script>
-					<command>se</command>
+					<script>scripts.dir_binds.send_mapped_direction("southeast")</script>
+					<command></command>
 					<keyCode>51</keyCode>
 					<keyModifier>536870912</keyModifier>
 				</Key>

@@ -15,6 +15,7 @@ return {
     "mapper/mapper",
     "mapper/minimap",
     "mapper/speedwalk",
+    "mapper/directional_binds",
     "odmiana/odmiana",
     "statystyka/zabici",
     "statystyka/opisy_poziomow",

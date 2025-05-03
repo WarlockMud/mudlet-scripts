@@ -5,7 +5,8 @@ scripts["mapper"] = scripts["mapper"] or {
     env = {},
     service = {},    
     ENV_START_NUM = 17,
-	currentRoom = {}
+	currentRoom = {},
+	lastSentCommand = nil
 }
 scripts.mapper.kierunki["polnoc"] = {{"north", "n"}, 1, {0, 2, 0}, "poludnie", "|"}
 scripts.mapper.kierunki["polnocny-wschod"] = {{"northeast", "ne"}, 2, {2, 2, 0}, "poludniowy-zachod", "/"}
@@ -44,6 +45,20 @@ scripts.mapper.service[6] = {type = "ROOM_SERVICE_WATER", letter = "w", color = 
 scripts.mapper.service[7] = {type = "ROOM_SERVICE_PUB", letter = "J"}
 scripts.mapper.service[8] = {type = "ROOM_SERVICE_BARBER", letter = "F"}
 
+
+function scripts.mapper.captureSentCommand(eventName, command)
+    if command and #command > 0 then
+         scripts.mapper.lastSentCommand = command
+    else
+         scripts.mapper.lastSentCommand = nil
+    end
+    return false
+end
+
+if scripts.event_handlers["scripts/mapper/captureSentCommand"] then
+    killAnonymousEventHandler(scripts.event_handlers["scripts/mapper/captureSentCommand"])
+end
+scripts.event_handlers["scripts/mapper/captureSentCommand"] = registerAnonymousEventHandler("sysDataSendRequest", scripts.mapper.captureSentCommand)
 
 function scripts.mapper:setupRoomColors()
 	for i, data in ipairs(scripts.mapper.env) do
@@ -182,7 +197,7 @@ end
 
 function scripts.mapper:connectExits(room, roomId, prevId)
 	if(prevId == nil or not roomExists(prevId)) then return end
-	
+
 	local cmd = room.komenda[3]
 	local kdat = scripts.mapper.kierunki[cmd]
 	if(kdat ~= nil) then
@@ -194,8 +209,8 @@ function scripts.mapper:connectExits(room, roomId, prevId)
 				setExit(prevId, roomId, kdat[2])
 			end
 		end
-	elseif(room.komenda[1] ~= "X") then
-		addSpecialExit(prevId, roomId, room.komenda[3])
+	elseif(room.komenda[1] ~= "X" and room.komenda[3] ~= 0) then
+		addSpecialExit(prevId, roomId, scripts.mapper.lastSentCommand)	
 	end
 end
 
