@@ -210,7 +210,9 @@ function scripts.mapper:connectExits(room, roomId, prevId)
 			end
 		end
 	elseif(room.komenda[1] ~= "X" and room.komenda[3] ~= 0) then
-		addSpecialExit(prevId, roomId, scripts.mapper.lastSentCommand)	
+		if scripts.mapper.lastSentCommand:match("^(%S+)") == room.komenda[1]:match("^(%S+)") then
+			addSpecialExit(prevId, roomId, scripts.mapper.lastSentCommand)	
+		end
 	end
 end
 
